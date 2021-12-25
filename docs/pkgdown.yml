@@ -1,0 +1,9 @@
+pandoc: 2.11.4
+pkgdown: 2.0.1
+pkgdown_sha: ~
+articles: {}
+last_built: 2021-12-25T07:00Z
+urls:
+  reference: https://jaspershen.github.io/laggedcor/reference
+  article: https://jaspershen.github.io/laggedcor/articles
+
