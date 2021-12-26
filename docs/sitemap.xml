@@ -16,7 +16,25 @@
     <loc>https://jaspershen.github.io/laggedcor/news/index.html</loc>
   </url>
   <url>
+    <loc>https://jaspershen.github.io/laggedcor/reference/calculate_lagged_correlation.html</loc>
+  </url>
+  <url>
+    <loc>https://jaspershen.github.io/laggedcor/reference/evaluate_lagged_cor.html</loc>
+  </url>
+  <url>
+    <loc>https://jaspershen.github.io/laggedcor/reference/heart_data.html</loc>
+  </url>
+  <url>
     <loc>https://jaspershen.github.io/laggedcor/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://jaspershen.github.io/laggedcor/reference/lagged_alignment_plot.html</loc>
+  </url>
+  <url>
+    <loc>https://jaspershen.github.io/laggedcor/reference/lagged_cor_result-class.html</loc>
+  </url>
+  <url>
+    <loc>https://jaspershen.github.io/laggedcor/reference/lagged_sactter_plot.html</loc>
   </url>
   <url>
     <loc>https://jaspershen.github.io/laggedcor/reference/laggedcor_conflicts.html</loc>
@@ -26,5 +44,11 @@
   </url>
   <url>
     <loc>https://jaspershen.github.io/laggedcor/reference/laggedcor_packages.html</loc>
+  </url>
+  <url>
+    <loc>https://jaspershen.github.io/laggedcor/reference/object.html</loc>
+  </url>
+  <url>
+    <loc>https://jaspershen.github.io/laggedcor/reference/step_data.html</loc>
   </url>
 </urlset>

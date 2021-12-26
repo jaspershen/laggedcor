@@ -6,9 +6,22 @@
 #' on UTF-8 platforms.
 #' @return A ASCII log of laggedcor
 #' @export
-#' @importFrom dplyr filter
+#' @importFrom dplyr filter mutate select group_by case_when
 #' @importFrom tibble tibble
 #' @importFrom rlang is_installed
+#' @import ggplot2
+#' @importFrom plyr dlply .
+#' @importFrom utils head tail
+#' @importFrom stats cor.test dnorm end loess predict start time
+#' @importFrom magrittr %>%
+#' @importFrom tinytools get_os
+#' @importFrom BiocParallel SnowParam MulticoreParam
+#' @import ggrepel
+#' @import ggsci
+#' @import lubridate
+#' @import scales
+#' @importFrom methods new
+#' @importClassesFrom massdataset tidymass_parameter
 #' @examples 
 #' laggedcor_logo()
 
@@ -18,21 +31,18 @@
 laggedcor_logo <- function(unicode = l10n_info()$`UTF-8`) {
   
   cat(crayon::green("Thank you for using laggedcor!\n"))
-  cat(crayon::green("Version 0.0.1 (2021-12-22)\n"))
+  cat(crayon::green("Version 0.0.1 (2021-12-24)\n"))
   cat(
     crayon::green(
-      "More information can be found at https://laggedcor.github.io/laggedcor/\n"
+      "More information can be found at https://jaspershen.github.io/laggedcor/\n"
     )
   )
   
   logo =
-    c(
-      "0 __  _    __   1    2           3  4 ",
-      "  _   _     _                               ", " | | (_)   | |                              ",
-      " | |_ _  __| |_   _ _ __ ___   __ _ ___ ___ ", " | __| |/ _` | | | | '_ ` _ \\ / _` / __/ __|",
-      " | |_| | (_| | |_| | | | | | | (_| \\__ \\__ \\", "  \\__|_|\\__,_|\\__, |_| |_| |_|\\__,_|___/___/",
-      "               __/ |                        ", "              |___/                         ",
-      "     5  6 /___/      7      8       9 "
+    c("  _                            _  _____           ", " | |                          | |/ ____|          ", 
+      " | | __ _  __ _  __ _  ___  __| | |     ___  _ __ ", " | |/ _` |/ _` |/ _` |/ _ \\/ _` | |    / _ \\| '__|", 
+      " | | (_| | (_| | (_| |  __/ (_| | |___| (_) | |   ", " |_|\\__,_|\\__, |\\__, |\\___|\\__,_|\\_____\\___/|_|   ", 
+      "           __/ | __/ |                            ", "          |___/ |___/                             "
     )
   
   
