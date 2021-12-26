@@ -45,6 +45,11 @@ setMethod(
   definition = function(object) {
     cat(crayon::yellow(paste(rep("-", 20), collapse = ""), "\n"))
     cat(crayon::yellow("Brief information", "\n"))
+    cat(crayon::yellow("Shift time is x - y", "\n"))
+    cat(crayon::yellow("If shift time > 0:", "\n"))
+    cat(crayon::yellow("means that x is changing after y", "\n"))
+    cat(crayon::yellow("If shift time < 0:", "\n"))
+    cat(crayon::yellow("means that x is changing before y", "\n"))
     cat(crayon::yellow(paste(rep("-", 20), collapse = ""), "\n"))
     cat(crayon::green("length of x:", length(object@x), "\n"))
     cat(crayon::green("length of y:", length(object@y), "\n"))

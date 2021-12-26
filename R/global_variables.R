@@ -8,5 +8,6 @@ globalVariables(names = c(
   "y",
   "xend",
   "yend",
-  "..count.."
+  "..count..",
+  "value"
 ))

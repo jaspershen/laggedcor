@@ -36,9 +36,12 @@
      
     <span class="caret"></span>
   </a>
-  <ul class="dropdown-menu" role="menu"><li class="divider">
-    <li class="dropdown-header">Install</li>
-    <li class="dropdown-header">Install laggedcor and all the packages in it</li>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/laggedcor_install.html">Install laggedcor</a>
+    </li>
+    <li>
+      <a href="../articles/lagged_correlation.html">Calculated lagged correlation</a>
+    </li>
   </ul></li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -155,17 +158,11 @@
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">heart_data</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">step_data</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">=</span> <span class="va">heart_data</span><span class="op">$</span><span class="va">heart</span></span>
-<span class="r-in"><span class="va">time1</span> <span class="op">=</span> <span class="va">heart_data</span><span class="op">$</span><span class="va">time</span></span>
+<span class="r-in"><span class="va">x</span> <span class="op">=</span> <span class="va">step_data</span><span class="op">$</span><span class="va">step</span></span>
+<span class="r-in"><span class="va">time1</span> <span class="op">=</span> <span class="va">step_data</span><span class="op">$</span><span class="va">time</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">y</span> <span class="op">=</span> <span class="va">step_data</span><span class="op">$</span><span class="va">step</span></span>
-<span class="r-in"><span class="va">time2</span> <span class="op">=</span> <span class="va">step_data</span><span class="op">$</span><span class="va">time</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># time_tol = 0.5</span></span>
-<span class="r-in"><span class="co"># step = 1 / 60</span></span>
-<span class="r-in"><span class="co"># min_matched_sample = 10</span></span>
-<span class="r-in"><span class="co"># progressbar = TRUE</span></span>
-<span class="r-in"><span class="co"># all_idx = NULL</span></span>
+<span class="r-in"><span class="va">y</span> <span class="op">=</span> <span class="va">heart_data</span><span class="op">$</span><span class="va">heart</span></span>
+<span class="r-in"><span class="va">time2</span> <span class="op">=</span> <span class="va">heart_data</span><span class="op">$</span><span class="va">time</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">object</span> <span class="op">=</span></span>
 <span class="r-in">  <span class="fu">calculate_lagged_correlation</span><span class="op">(</span></span>
@@ -173,15 +170,14 @@
 <span class="r-in">    y <span class="op">=</span> <span class="va">y</span>,</span>
 <span class="r-in">    time1 <span class="op">=</span> <span class="va">time1</span>,</span>
 <span class="r-in">    time2 <span class="op">=</span> <span class="va">time2</span>,</span>
-<span class="r-in">    time_tol <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span class="r-in">    time_tol <span class="op">=</span> <span class="fl">0.2</span>,</span>
 <span class="r-in">    step <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">60</span>,</span>
 <span class="r-in">    min_matched_sample <span class="op">=</span> <span class="fl">10</span>,</span>
 <span class="r-in">    progressbar <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">    all_idx <span class="op">=</span> <span class="va">all_idx</span>,</span>
-<span class="r-in">    threads <span class="op">=</span> <span class="fl">10</span>,</span>
+<span class="r-in">    threads <span class="op">=</span> <span class="fl">5</span>,</span>
 <span class="r-in">    cor_method <span class="op">=</span> <span class="st">"spearman"</span></span>
 <span class="r-in">  <span class="op">)</span></span>
-<span class="r-in">  <span class="va">object</span></span>
+<span class="r-in"><span class="va">object</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>

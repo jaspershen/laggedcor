@@ -1,0 +1,123 @@
+---
+title: "Calculate lagged correlation between two time-series data"
+author:
+- name: Xiaotao Shen (https://www.shenxt.info/)
+date: "Created on 2021-12-25 and updated on `r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    toc: no
+  pdf_document:
+    toc: no
+vignette: >
+  %\VignetteIndexEntry{lagged_correlation}
+  %\VignettePackage{massqc}
+  % \VignetteEngine{knitr::rmarkdown}
+  % \usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE, echo=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = TRUE,
+  out.width = "100%"
+)
+```
+
+## **Data preparation**
+
+`laggedcor` needs two time-series data and their corresponding time.
+
+* x: time-series 1. numeric vector. 
+
+* y: time-series 2. numeric vector. 
+
+* time1: time for x. 
+
+* time2: time for y.
+
+The demo data can be from `laggedcor`.
+
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+library(laggedcor)
+data("step_data", package = "laggedcor")
+data("heart_data", package = "laggedcor")
+
+head(step_data)
+head(heart_data)
+```
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+time_plot(x = step_data$step, time = step_data$time)
+```
+
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+time_plot(x = heart_data$heart, time = heart_data$time)
+```
+
+## **Calculate lagged correlation**
+
+Then we calculate the lagged correlations between step and heart rate.
+
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+dim(step_data)
+dim(heart_data)
+```
+The time-series data with less number of time point should be set as `x`.
+
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+x = step_data$step
+time1 = step_data$time
+
+y = heart_data$heart
+time2 = heart_data$time
+```
+
+
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+result = 
+  calculate_lagged_correlation(x = x, 
+                               y = y,
+                               time1 = time1, 
+                               time2 = time2, 
+                               time_tol = 0.2, 
+                               step = 2 / 60, 
+                               min_matched_sample = 10, 
+                               threads = 5, 
+                               cor_method = "spearman")
+```
+
+The parameters of `calculate_lagged_correlation`;
+
+* `x`: time-series data 1.
+
+* `y`: time-series data 2.
+
+* `time1`: time-series data time 1.
+
+* `time2`: time-series data time 2.
+
+* `time_tol`: time tolerance for time shift. Unit is hour. 0.2 means ± 0.2 hour.
+
+* `step`: step means the matching window, unit is hour.
+
+* `min_matched_sample`: Minimum for match sample number.
+
+* `threads`: thread number.
+
+* `cor_method`: spearman or pearson.
+
+
+## **Result of lagged correlation**
+
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+result
+```
+
+We can see that the index of max correlation is 11 and index of global correlation is 12, means that the max correlation is achieved from a shifted time.
+
+## **Result of lagged correlation**
+
+

@@ -55,17 +55,11 @@ data("step_data", package = "laggedcor")
 dim(heart_data)
 dim(step_data)
 
-x = heart_data$heart
-time1 = heart_data$time
+x = step_data$step
+time1 = step_data$time
 
-y = step_data$step
-time2 = step_data$time
-
-# time_tol = 0.5
-# step = 1 / 60
-# min_matched_sample = 10
-# progressbar = TRUE
-# all_idx = NULL
+y = heart_data$heart
+time2 = heart_data$time
 
 object =
   calculate_lagged_correlation(
@@ -73,15 +67,14 @@ object =
     y = y,
     time1 = time1,
     time2 = time2,
-    time_tol = 0.5,
+    time_tol = 0.2,
     step = 1 / 60,
     min_matched_sample = 10,
     progressbar = TRUE,
-    all_idx = all_idx,
-    threads = 10,
+    threads = 5,
     cor_method = "spearman"
   )
-  object
+object
 }
 }
 \author{

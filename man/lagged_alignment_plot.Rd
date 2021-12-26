@@ -9,8 +9,8 @@ lagged_alignment_plot(
   day_night_df = NULL,
   x_color = "#631879FF",
   y_color = "#E377C2FF",
-  x_name = "Step",
-  y_name = "HR",
+  x_name = "x",
+  y_name = "y",
   which = c("global", "max"),
   x_limit = c(1, 1000),
   non_matched_point_size = 0.1,
@@ -58,6 +58,36 @@ A ggplot2 object.
 }
 \description{
 lagged_alignment_plot
+}
+\examples{
+data("object", package = "laggedcor")
+
+lagged_alignment_plot(object = object, 
+                      x_limit = c(1, 1000))
+lagged_alignment_plot(object = object,
+                      x_limit = c(1, 10000),
+                      time_gap = 10)
+
+lagged_alignment_plot(
+  object = object,
+  x_limit = c(1, 100),
+  time_gap = 1,
+  add_point = TRUE,
+  x_point_size = 1,
+  y_point_size = 1, 
+  integrated = TRUE, 
+  add_connect_line = TRUE
+)
+
+lagged_alignment_plot(
+  object = object,
+  x_limit = c(1, 100),
+  time_gap = 1,
+  add_point = TRUE,
+  x_point_size = 1,
+  y_point_size = 1, 
+  integrated = FALSE
+)
 }
 \author{
 Xiaotao Shen

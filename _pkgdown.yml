@@ -30,8 +30,24 @@ template:
     ganalytics: UA-000000-01
 
 reference:
-  - title: Functions
-    desc: Functions in tidymas
+  - title: Lagged correlation
+    desc: Calculate lagged correlation
+    contents:
+    - calculate_lagged_correlation
+    - evaluate_lagged_cor
+    - lagged_alignment_plot
+    - lagged_sactter_plot
+    - time_plot
+  - title: Extract data
+    desc: Extract data from lagged_cor_result
+    contents:
+    - extract_all_cor_p
+    - extract_all_cor
+    - extract_global_cor
+    - extract_max_cor
+    - extract_shift_time
+  - title: Others
+    desc: Other functions
     contents:
     - laggedcor_install
     - laggedcor_logo
@@ -49,9 +65,10 @@ navbar:
       text: Help document
       icon: fa-folder-open
       menu:
-      - text: --------
-      - text: "Install"
-      - text: Install laggedcor and all the packages in it 
+      - text: Install laggedcor
+        href: articles/laggedcor_install.html
+      - text: Calculated lagged correlation
+        href: articles/lagged_correlation.html
     twitter:
       icon: "fab fa-twitter fa-lg"
       href: https://twitter.com/xiaotaoshen1990

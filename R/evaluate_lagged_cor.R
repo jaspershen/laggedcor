@@ -6,6 +6,13 @@
 #' @param plot return plot or not.
 #' @export
 #' @return A ggplot2 object.
+#' @examples 
+#' data("object", package = "laggedcor")
+#' result = 
+#'   evaluate_lagged_cor(object = object, plot = TRUE)
+#' 
+#' result$score
+#' result$plot
 
 evaluate_lagged_cor =
   function(object,

@@ -29,6 +29,24 @@ A ggplot2 object.
 \description{
 lagged_sactter_plot
 }
+\examples{
+data("object", package = "laggedcor")
+lagged_sactter_plot(
+  object = object,
+  x_name = "Step",
+  y_name = "HR",
+  hex = TRUE, 
+  which = "max"
+)
+
+lagged_sactter_plot(
+  object = object,
+  x_name = "Step",
+  y_name = "HR",
+  hex = TRUE, 
+  which = "global"
+)
+}
 \author{
 Xiaotao Shen
 \email{shenxt1990@outlook.com}

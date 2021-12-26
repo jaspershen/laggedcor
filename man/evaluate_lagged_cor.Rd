@@ -17,6 +17,14 @@ A ggplot2 object.
 \description{
 evaluate_lagged_cor
 }
+\examples{
+data("object", package = "laggedcor")
+result = 
+  evaluate_lagged_cor(object = object, plot = TRUE)
+
+result$score
+result$plot
+}
 \author{
 Xiaotao Shen
 \email{shenxt1990@outlook.com}

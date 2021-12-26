@@ -19,39 +19,31 @@
 #' \dontrun{
 #' data("heart_data", package = "laggedcor")
 #' data("step_data", package = "laggedcor")
-#'
+#' 
 #' dim(heart_data)
 #' dim(step_data)
-#'
-#' x = heart_data$heart
-#' time1 = heart_data$time
-#'
-#' y = step_data$step
-#' time2 = step_data$time
-#'
-#' # time_tol = 0.5
-#' # step = 1 / 60
-#' # min_matched_sample = 10
-#' # progressbar = TRUE
-#' # all_idx = NULL
-#'
+#' 
+#' x = step_data$step
+#' time1 = step_data$time
+#' 
+#' y = heart_data$heart
+#' time2 = heart_data$time
+#' 
 #' object =
 #'   calculate_lagged_correlation(
 #'     x = x,
 #'     y = y,
 #'     time1 = time1,
 #'     time2 = time2,
-#'     time_tol = 0.5,
+#'     time_tol = 0.2,
 #'     step = 1 / 60,
 #'     min_matched_sample = 10,
 #'     progressbar = TRUE,
-#'     all_idx = all_idx,
-#'     threads = 10,
+#'     threads = 5,
 #'     cor_method = "spearman"
 #'   )
-#'   object
+#' object
 #' }
-
 
 calculate_lagged_correlation =
   function(x,
@@ -93,9 +85,10 @@ calculate_lagged_correlation =
                time2) {
         idx =
           time1 %>%
-          purrr::map(function(x) {
+          purrr::map(function(temp_time1) {
+            # cat(match(temp_time1, time1), " ")
             diff_time =
-              difftime(x, time2, units = "hours")
+              difftime(temp_time1, time2, units = "hours")
             which(diff_time > time_window[temp_idx] &
                     diff_time <= time_window[temp_idx + 1])
           })
@@ -236,4 +229,3 @@ calculate_lagged_correlation =
     return(object)
     
   }
-
