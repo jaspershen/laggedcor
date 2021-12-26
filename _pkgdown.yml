@@ -36,7 +36,7 @@ reference:
     - calculate_lagged_correlation
     - evaluate_lagged_cor
     - lagged_alignment_plot
-    - lagged_sactter_plot
+    - lagged_scatter_plot
     - time_plot
   - title: Extract data
     desc: Extract data from lagged_cor_result

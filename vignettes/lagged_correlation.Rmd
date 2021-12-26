@@ -120,4 +120,39 @@ We can see that the index of max correlation is 11 and index of global correlati
 
 ## **Result of lagged correlation**
 
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+extract_max_cor(object = result)
+extract_global_cor(object = result)
+```
 
+We can see that when the shift time is "(-1.5,-0.5]", we get the max correaltion: 0.58. This means x (step) changes before y (heart rate).
+
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+extract_all_cor(result)
+```
+
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+extract_all_cor_p(result)
+```
+
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+extract_shift_time(result, numeric = TRUE)
+extract_shift_time(result, numeric = FALSE)
+```
+
+## **Evaluate the quality of lagged correlation**
+
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+evaluate_lagged_cor(object = result, plot = TRUE)
+```
+
+## **Some results**
+
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+lagged_scatter_plot(object = object, hex = TRUE, which = "global")
+lagged_scatter_plot(object = object, hex = TRUE, which = "max")
+```
+
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+lagged_alignment_plot(object = object, which = "global", x_limit = c(1,50000))
+```

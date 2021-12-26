@@ -6,7 +6,6 @@
 \usage{
 lagged_alignment_plot(
   object,
-  day_night_df = NULL,
   x_color = "#631879FF",
   y_color = "#E377C2FF",
   x_name = "x",
@@ -24,8 +23,6 @@ lagged_alignment_plot(
 }
 \arguments{
 \item{object}{a lagged_scatter_result class object.}
-
-\item{day_night_df}{day_night_df}
 
 \item{x_color}{x_color}
 
@@ -62,7 +59,7 @@ lagged_alignment_plot
 \examples{
 data("object", package = "laggedcor")
 
-lagged_alignment_plot(object = object, 
+lagged_alignment_plot(object = object,
                       x_limit = c(1, 1000))
 lagged_alignment_plot(object = object,
                       x_limit = c(1, 10000),
@@ -74,8 +71,8 @@ lagged_alignment_plot(
   time_gap = 1,
   add_point = TRUE,
   x_point_size = 1,
-  y_point_size = 1, 
-  integrated = TRUE, 
+  y_point_size = 1,
+  integrated = TRUE,
   add_connect_line = TRUE
 )
 
@@ -85,7 +82,7 @@ lagged_alignment_plot(
   time_gap = 1,
   add_point = TRUE,
   x_point_size = 1,
-  y_point_size = 1, 
+  y_point_size = 1,
   integrated = FALSE
 )
 }

@@ -1,5 +1,5 @@
-#' @title lagged_sactter_plot
-#' @description lagged_sactter_plot
+#' @title lagged_scatter_plot
+#' @description lagged_scatter_plot
 #' @author Xiaotao Shen
 #' \email{shenxt1990@@outlook.com}
 #' @param object a lagged_scatter_result class object.
@@ -11,7 +11,7 @@
 #' @return A ggplot2 object.
 #' @examples 
 #' data("object", package = "laggedcor")
-#' lagged_sactter_plot(
+#' lagged_scatter_plot(
 #'   object = object,
 #'   x_name = "Step",
 #'   y_name = "HR",
@@ -19,7 +19,7 @@
 #'   which = "max"
 #' )
 #' 
-#' lagged_sactter_plot(
+#' lagged_scatter_plot(
 #'   object = object,
 #'   x_name = "Step",
 #'   y_name = "HR",
@@ -27,7 +27,7 @@
 #'   which = "global"
 #' )
 
-lagged_sactter_plot =
+lagged_scatter_plot =
   function(object,
            x_name = "x",
            y_name = "y",

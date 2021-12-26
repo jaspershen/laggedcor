@@ -264,6 +264,60 @@
 <h2 id="result-of-lagged-correlation-1">
 <strong>Result of lagged correlation</strong><a class="anchor" aria-label="anchor" href="#result-of-lagged-correlation-1"></a>
 </h2>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/extract_max_cor.html">extract_max_cor</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">result</span><span class="op">)</span>
+<span class="co">#&gt;   (-3,-1] </span>
+<span class="co">#&gt; 0.5848359</span>
+<span class="fu"><a href="../reference/extract_global_cor.html">extract_global_cor</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">result</span><span class="op">)</span>
+<span class="co">#&gt;    (-1,1] </span>
+<span class="co">#&gt; 0.5446995</span></code></pre></div>
+<p>We can see that when the shift time is “(-1.5,-0.5]”, we get the max correaltion: 0.58. This means x (step) changes before y (heart rate).</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/extract_all_cor.html">extract_all_cor</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
+<span class="co">#&gt;  (-11,-9]   (-9,-7]   (-7,-5]   (-5,-3]   (-3,-1]    (-1,1]     (1,3]     (3,5] </span>
+<span class="co">#&gt; 0.3881415 0.4272695 0.4677489 0.5286853 0.5848359 0.5446995 0.4711800 0.4246677 </span>
+<span class="co">#&gt;     (5,7]     (7,9]    (9,11] </span>
+<span class="co">#&gt; 0.3836658 0.3447499 0.3161717</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/extract_all_cor_p.html">extract_all_cor_p</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
+<span class="co">#&gt;      (-11,-9]       (-9,-7]       (-7,-5]       (-5,-3]       (-3,-1] </span>
+<span class="co">#&gt;  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00 </span>
+<span class="co">#&gt;        (-1,1]         (1,3]         (3,5]         (5,7]         (7,9] </span>
+<span class="co">#&gt;  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00 </span>
+<span class="co">#&gt;        (9,11] </span>
+<span class="co">#&gt; 3.205407e-287</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/extract_shift_time.html">extract_shift_time</a></span><span class="op">(</span><span class="va">result</span>, numeric <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt;  [1] -10  -8  -6  -4  -2   0   2   4   6   8  10</span>
+<span class="fu"><a href="../reference/extract_shift_time.html">extract_shift_time</a></span><span class="op">(</span><span class="va">result</span>, numeric <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="co">#&gt;  [1] "(-11,-9]" "(-9,-7]"  "(-7,-5]"  "(-5,-3]"  "(-3,-1]"  "(-1,1]"  </span>
+<span class="co">#&gt;  [7] "(1,3]"    "(3,5]"    "(5,7]"    "(7,9]"    "(9,11]"</span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="evaluate-the-quality-of-lagged-correlation">
+<strong>Evaluate the quality of lagged correlation</strong><a class="anchor" aria-label="anchor" href="#evaluate-the-quality-of-lagged-correlation"></a>
+</h2>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/evaluate_lagged_cor.html">evaluate_lagged_cor</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">result</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; $score</span>
+<span class="co">#&gt; [1] 0.9973992</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $plot</span></code></pre></div>
+<p><img src="lagged_correlation_files/figure-html/unnamed-chunk-13-1.png" width="100%"></p>
+</div>
+<div class="section level2">
+<h2 id="some-results">
+<strong>Some results</strong><a class="anchor" aria-label="anchor" href="#some-results"></a>
+</h2>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/lagged_scatter_plot.html">lagged_scatter_plot</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">object</span>, hex <span class="op">=</span> <span class="cn">TRUE</span>, which <span class="op">=</span> <span class="st">"global"</span><span class="op">)</span></code></pre></div>
+<p><img src="lagged_correlation_files/figure-html/unnamed-chunk-14-1.png" width="100%"></p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/lagged_scatter_plot.html">lagged_scatter_plot</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">object</span>, hex <span class="op">=</span> <span class="cn">TRUE</span>, which <span class="op">=</span> <span class="st">"max"</span><span class="op">)</span></code></pre></div>
+<p><img src="lagged_correlation_files/figure-html/unnamed-chunk-14-2.png" width="100%"></p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/lagged_alignment_plot.html">lagged_alignment_plot</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">object</span>, which <span class="op">=</span> <span class="st">"global"</span>, x_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">50000</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="lagged_correlation_files/figure-html/unnamed-chunk-15-1.png" width="100%"></p>
 </div>
   </div>
 

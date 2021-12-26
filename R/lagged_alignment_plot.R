@@ -3,7 +3,6 @@
 #' @author Xiaotao Shen
 #' \email{shenxt1990@@outlook.com}
 #' @param object a lagged_scatter_result class object.
-#' @param day_night_df day_night_df
 #' @param x_color x_color
 #' @param y_color y_color
 #' @param x_name x_name
@@ -19,39 +18,38 @@
 #' @param time_gap time_gap in x axis.
 #' @export
 #' @return A ggplot2 object.
-#' @examples 
+#' @examples
 #' data("object", package = "laggedcor")
-#' 
-#' lagged_alignment_plot(object = object, 
+#'
+#' lagged_alignment_plot(object = object,
 #'                       x_limit = c(1, 1000))
 #' lagged_alignment_plot(object = object,
 #'                       x_limit = c(1, 10000),
 #'                       time_gap = 10)
-#' 
+#'
 #' lagged_alignment_plot(
 #'   object = object,
 #'   x_limit = c(1, 100),
 #'   time_gap = 1,
 #'   add_point = TRUE,
 #'   x_point_size = 1,
-#'   y_point_size = 1, 
-#'   integrated = TRUE, 
+#'   y_point_size = 1,
+#'   integrated = TRUE,
 #'   add_connect_line = TRUE
 #' )
-#' 
+#'
 #' lagged_alignment_plot(
 #'   object = object,
 #'   x_limit = c(1, 100),
 #'   time_gap = 1,
 #'   add_point = TRUE,
 #'   x_point_size = 1,
-#'   y_point_size = 1, 
+#'   y_point_size = 1,
 #'   integrated = FALSE
 #' )
 
 lagged_alignment_plot =
   function(object,
-           day_night_df = NULL,
            x_color = "#631879FF",
            y_color = "#E377C2FF",
            x_name = "x",
@@ -82,9 +80,9 @@ lagged_alignment_plot =
     x = object@x
     y = object@y
     
-    if (x_limit[2] > length(x)) {
-      x_limit[2] = length(x)
-    }
+    # if (x_limit[2] > length(x)) {
+    #   x_limit[2] = length(x)
+    # }
     
     if (max(x) > min(y)) {
       x = x - (max(x) - min(y))
@@ -155,44 +153,48 @@ lagged_alignment_plot =
                                   matched == "NO" ~ "NO"))
     }
     
-    if (!is.null(day_night_df)) {
-      plot =
-        ggplot() +
-        geom_rect(
-          mapping = aes(
-            xmin = start,
-            xmax = end,
-            ymin = -Inf,
-            ymax = Inf
-          ),
-          fill = "lightyellow",
-          data = day_night_df,
-          show.legend = FALSE
-        ) +
-        geom_line(
-          data = value,
-          aes(
-            x = time,
-            y = value,
-            group = class,
-            color = class
-          ),
-          show.legend = TRUE
-        )
-    } else{
-      plot =
-        ggplot() +
-        geom_line(
-          data = value,
-          aes(
-            x = time,
-            y = value,
-            group = class,
-            color = class
-          ),
-          show.legend = TRUE
-        )
-    }
+    time1 = sort(unique(value$time))[x_limit[1]]
+    time2 = sort(unique(value$time))[x_limit[2]]
+    
+    value =
+      value %>%
+      dplyr::filter(time >= time1 & time < time2)
+    
+    sun_rise =
+      lubridate::ymd_hms(paste(unique(lubridate::date(value$time)), c("6:00:00")),
+                         tz = lubridate::tz(value$time))
+    sun_set =
+      lubridate::ymd_hms(paste(unique(lubridate::date(value$time)), c("18:00:00")),
+                         tz = lubridate::tz(value$time))
+    
+    day_night_df =
+      data.frame(start = sun_rise,
+                 end = sun_set) %>%
+      dplyr::filter()
+    
+    plot =
+      ggplot() +
+      geom_rect(
+        mapping = aes(
+          xmin = start,
+          xmax = end,
+          ymin = -Inf,
+          ymax = Inf
+        ),
+        fill = "lightyellow",
+        data = day_night_df,
+        show.legend = FALSE
+      ) +
+      geom_line(
+        data = value,
+        aes(
+          x = time,
+          y = value,
+          group = class,
+          color = class
+        ),
+        show.legend = TRUE
+      )
     
     plot =
       plot +
