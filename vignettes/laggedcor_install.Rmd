@@ -97,3 +97,10 @@ GITHUB_PAT=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
 > The `GITHUB_PAT` should be yours that is created in step 1.
 
 And then restart R session and try again.
+
+
+## **Session information**
+
+```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
+sessionInfo()
+```
