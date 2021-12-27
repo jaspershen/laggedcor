@@ -12,10 +12,10 @@
 #' @return A ggplot2 object.
 #' @examples
 #' data("step_data", package = "laggedcor")
-#' 
+#'
 #' x = step_data$step
 #' time = step_data$time
-#' 
+#'
 #' time_plot(x, time)
 
 time_plot = function(x,

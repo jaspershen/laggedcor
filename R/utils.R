@@ -31,6 +31,7 @@ text_col <- function(x) {
 #'
 #' @param include_self Include laggedcor in the list?
 #' @export
+#' @return laggedcor packages
 #' @examples
 #' laggedcor_packages()
 laggedcor_packages <- function(include_self = TRUE) {
@@ -95,7 +96,7 @@ fitpeaks <- function(y, pos) {
         which(diff(peak.loc) != 1),
         length(peak.loc) + 1)
     
-    peaknrs <- rep(1:length(boundaries),
+    peaknrs <- rep(seq_along(boundaries),
                    c(boundaries[1], diff(c(boundaries))))
     peaknrs[boundaries[-1]] <- NA
     current.peak <- peaknrs[peak.loc == xloc]

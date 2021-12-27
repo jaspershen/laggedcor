@@ -12,6 +12,5 @@ object
 }
 \description{
 object
-object
 }
 \keyword{datasets}

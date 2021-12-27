@@ -3,7 +3,7 @@
 \docType{data}
 \name{heart_data}
 \alias{heart_data}
-\title{Heart data.}
+\title{Heart rate data.}
 \format{
 A data frame with 2 columns.
 }
@@ -11,7 +11,6 @@ A data frame with 2 columns.
 heart_data
 }
 \description{
-Heart data.
-Heart data.
+Heart rate data.
 }
 \keyword{datasets}

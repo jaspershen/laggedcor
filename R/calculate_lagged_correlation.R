@@ -16,7 +16,7 @@
 #' @export
 #' @return A lagged_cor class object.
 #' @examples
-#' \dontrun{
+#'\dontrun{
 #' data("heart_data", package = "laggedcor")
 #' data("step_data", package = "laggedcor")
 #' 
@@ -35,7 +35,7 @@
 #'     y = y,
 #'     time1 = time1,
 #'     time2 = time2,
-#'     time_tol = 0.2,
+#'     time_tol = 0.1,
 #'     step = 1 / 60,
 #'     min_matched_sample = 10,
 #'     progressbar = TRUE,
@@ -107,7 +107,7 @@ calculate_lagged_correlation =
     if (is.null(all_idx)) {
       all_idx =
         BiocParallel::bplapply(
-          X = 1:(length(time_window) - 1),
+          X = seq_along(time_window)[-length(time_window)],
           FUN = temp_fun,
           time_window = time_window,
           x = x,

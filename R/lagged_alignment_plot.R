@@ -253,7 +253,7 @@ lagged_alignment_plot =
     if (add_connect_line) {
       ###get the segment data
       segment_data =
-        purrr::map(1:length(idx), function(i) {
+        purrr::map(seq_along(idx), function(i) {
           if (length(idx[[i]]) > 0) {
             data.frame(
               time1 = time1[i],

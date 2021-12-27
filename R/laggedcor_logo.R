@@ -22,27 +22,24 @@
 #' @import scales
 #' @importFrom methods new
 #' @importClassesFrom massdataset tidymass_parameter
-#' @examples 
+#' @examples
 #' laggedcor_logo()
 
-
-##https://onlineasciitools.com/convert-text-to-ascii-art
-
 laggedcor_logo <- function(unicode = l10n_info()$`UTF-8`) {
-  
   cat(crayon::green("Thank you for using laggedcor!\n"))
   cat(crayon::green("Version 0.0.1 (2021-12-24)\n"))
-  cat(
-    crayon::green(
-      "More information can be found at https://jaspershen.github.io/laggedcor/\n"
-    )
-  )
+  cat(crayon::green("More information: searching 'jaspershen laggedcor'.\n"))
   
   logo =
-    c("  _                            _  _____           ", " | |                          | |/ ____|          ", 
-      " | | __ _  __ _  __ _  ___  __| | |     ___  _ __ ", " | |/ _` |/ _` |/ _` |/ _ \\/ _` | |    / _ \\| '__|", 
-      " | | (_| | (_| | (_| |  __/ (_| | |___| (_) | |   ", " |_|\\__,_|\\__, |\\__, |\\___|\\__,_|\\_____\\___/|_|   ", 
-      "           __/ | __/ |                            ", "          |___/ |___/                             "
+    c(
+      "  _                            _  _____           ",
+      " | |                          | |/ ____|          ",
+      " | | __ _  __ _  __ _  ___  __| | |     ___  _ __ ",
+      " | |/ _` |/ _` |/ _` |/ _ \\/ _` | |    / _ \\| '__|",
+      " | | (_| | (_| | (_| |  __/ (_| | |___| (_) | |   ",
+      " |_|\\__,_|\\__, |\\__, |\\___|\\__,_|\\_____\\___/|_|   ",
+      "           __/ | __/ |                            ",
+      "          |___/ |___/                             "
     )
   
   
@@ -80,6 +77,3 @@ print.laggedcor_logo <- function(x, ...) {
   cat(x, ..., sep = "\n")
   invisible(x)
 }
-
-
-

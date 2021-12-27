@@ -9,6 +9,9 @@ laggedcor_packages(include_self = TRUE)
 \arguments{
 \item{include_self}{Include laggedcor in the list?}
 }
+\value{
+laggedcor packages
+}
 \description{
 List all packages in the laggedcor
 }

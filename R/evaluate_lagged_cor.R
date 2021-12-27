@@ -61,7 +61,7 @@ evaluate_lagged_cor =
     if (!is.na(pks_positive[1, 1])) {
       fitted_y_positive =
         dnorm(
-          x = 1:length(cor_positive),
+          x = seq_along(cor_positive),
           mean = as.numeric(pks_positive[1, "rt"]),
           sd = as.numeric(pks_positive[1, "sd"])
         ) * as.numeric(pks_positive[1, "area"])
@@ -89,7 +89,7 @@ evaluate_lagged_cor =
     if (!is.na(pks_negative[1, 1])) {
       fitted_y_negative =
         dnorm(
-          x = 1:length(cor_negative),
+          x = seq_along(cor_negative),
           mean = as.numeric(pks_negative[1, "rt"]),
           sd = as.numeric(pks_negative[1, "sd"])
         ) * as.numeric(pks_negative[1, "area"])

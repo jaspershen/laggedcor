@@ -6,6 +6,9 @@
 \usage{
 laggedcor_conflicts()
 }
+\value{
+laggedcor conflicts
+}
 \description{
 This function lists all the conflicts between packages in the laggedcor
 and other packages that you have loaded.

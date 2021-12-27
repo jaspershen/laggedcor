@@ -7,7 +7,7 @@
 #' \code{union}, \code{setequal}, and \code{setdiff} from dplyr. These functions
 #' make the base equivalents generic, so shouldn't negatively affect any
 #' existing code.
-#'
+#' @return laggedcor conflicts
 #' @export
 #' @examples
 #' laggedcor_conflicts()

@@ -12,6 +12,5 @@ step_data
 }
 \description{
 Step data.
-Step data.
 }
 \keyword{datasets}
