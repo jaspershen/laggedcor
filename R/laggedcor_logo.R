@@ -14,7 +14,6 @@
 #' @importFrom utils head tail
 #' @importFrom stats cor.test dnorm end loess predict start time
 #' @importFrom magrittr %>%
-#' @importFrom tinytools get_os
 #' @importFrom BiocParallel SnowParam MulticoreParam
 #' @import ggrepel
 #' @import ggsci

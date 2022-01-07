@@ -8,7 +8,12 @@ Authors@R: c(
            email = "shenxt1990@outlook.com",
            comment = c(ORCID = "0000-0002-9608-9964"))
            )
-Description: Calculate the lagged correlation between two time-series data (wearable and omics data.) Learn more about the 'laggedcor' at <https://laggedcor.jaspershen.io/laggedcor/>.
+Description: laggedcor is package which used for time-series data analysis in
+             wearable and omics field.
+             It is used to calculate the lagged correlation between two 
+             time-series data (wearable and omics data). 
+             Learn more about the 'laggedcor' at 
+             <https://laggedcor.jaspershen.io/laggedcor/>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: false
@@ -33,7 +38,6 @@ Imports:
     ggsci,
     lubridate,
     scales,
-    tinytools,
     massdataset,
     methods,
     stats,
@@ -42,7 +46,6 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-biocViews: omics
+biocViews: Technology
 Remotes: 
-    tidymass/tinytools,
     tidymass/massdataset

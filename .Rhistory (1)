@@ -1,0 +1,293 @@
+getwd()
+tinytools::openwd()
+usethis::edit_r_buildignore()
+usethis::use_news_md()
+devtools::document()
+devtools::build()
+devtools::check()
+usethis::edit_r_buildignore(scope = "project")
+devtools::document()
+devtools::build()
+devtools::check()
+pkgdown::build_site()
+pkgdown::build_site()
+pkgdown::build_site()
+pkgdown::build_site()
+pkgdown::build_site()
+pkgdown::build_site()
+pkgdown::build_site()
+getwd()
+pkgdown::build_site()
+pkgdown::build_site()
+pkgdown::build_site()
+pkgdown::build_site()
+pkgdown::build_site()
+pkgdown::build_site()
+pkgdown::build_site()
+art <- readLines("logo.txt")
+art
+dput(art)
+source("~/github/laggedcor/R/laggedcor_logo.R.R")
+laggedcor_logo()
+devtools::document()
+devtools::build()
+devtools::check()
+pkgdown::build_site()
+load("data/heart_data.rda")
+heart_data$time
+heart_data$time %>% class()
+0.5/60
+getwd()
+devtools::document()
+devtools::build()
+devtools::check()
+devtools::document()
+devtools::build()
+devtools::check()
+devtools::document()
+devtools::build()
+devtools::check()
+devtools::document()
+devtools::build()
+devtools::document()
+devtools::build()
+devtools::check()
+devtools::document()
+devtools::build()
+devtools::check()
+pkgdown::build_site()
+devtools::install_github("jaspershen/laggercor")
+devtools::install_github("jaspershen/laggedcor")
+usethis::create_github_token()
+usethis::edit_r_environ()
+devtools::install_github("jaspershen/laggedcor")
+devtools::install_github("jaspershen/laggedcor")
+install.packages("~/github/laggedcor_0.0.1.tar.gz", repos = NULL, type = "source")
+data("heart_data", package = "laggedcor")
+data("step_data", package = "laggedcor")
+heart_data
+dim(heart_data)
+dim(step_data)
+x = heart_data$
+calculate_lagged_correlation = function(x,
+y,
+time1,
+time2,
+time_tol = 1,
+###unit is hour
+step = 0.5 / 60,
+##unit is hour,
+min_matched_sample = 10,
+progressbar = TRUE,
+all_idx = NULL) {
+##time_tol unit is hour
+##step unit is hour
+x = as.numeric(x) %>%
+scale() %>%
+as.numeric()
+y = as.numeric(y) %>%
+scale() %>%
+as.numeric()
+time_window1 =
+seq(from = step / 2, to = time_tol, by = step)
+time_window2 =
+-rev(seq(from = step / 2, to = time_tol, by = step))
+time_window = sort(c(time_window2, time_window1))
+temp_fun =
+function(temp_idx,
+time_window,
+x,
+y,
+time1,
+time2) {
+idx =
+time1 %>%
+purrr::map(function(x) {
+diff_time =
+difftime(x, time2, units = "hours")
+which(diff_time > time_window[temp_idx] &
+diff_time <= time_window[temp_idx + 1])
+})
+}
+bpparam = BiocParallel::MulticoreParam(workers = 10,
+progressbar = progressbar)
+if (is.null(all_idx)) {
+all_idx =
+BiocParallel::bplapply(
+X = 1:(length(time_window) - 1),
+FUN = temp_fun,
+time_window = time_window,
+x = x,
+y = y,
+time1 = time1,
+time2 = time2,
+BPPARAM = bpparam
+)
+}
+# lapply(all_idx, function(x){
+#   length(unlist(x))
+# }) %>%
+#   unlist() %>%
+#   plot()
+all_cor_result =
+purrr::map(all_idx, function(idx) {
+temp_y =
+lapply(idx, function(x) {
+mean(y[x])
+}) %>%
+unlist()
+temp_x = x[which(!is.na(temp_y))]
+temp_y = temp_y[which(!is.na(temp_y))]
+if (length(temp_x) < min_matched_sample) {
+return(NA)
+} else{
+tryCatch(
+expr = cor.test(temp_x, temp_y, method = "spearman"),
+error = function(na) {
+return(NA)
+}
+)
+}
+})
+all_cor_p =
+all_cor_result %>%
+purrr::map(function(x) {
+if (is.na(x)) {
+return(NA)
+} else{
+x$p.value
+}
+}) %>%
+unlist()
+all_cor =
+all_cor_result %>%
+purrr::map(function(x) {
+if (is.na(x)) {
+return(NA)
+} else{
+x$estimate
+}
+}) %>%
+unlist() %>%
+unname()
+which_max_idx =
+which.max(abs(all_cor))
+max_idx = all_idx[[which_max_idx]]
+shift_time =
+paste("(",
+paste(round(time_window[-length(time_window)] * 60, 2),
+round(time_window[-1] * 60, 2), sep = ','),
+"]", sep = "")
+which_global_idx =
+purrr::map(shift_time, function(x) {
+x =
+stringr::str_replace(x, "\\(", "") %>%
+stringr::str_replace("\\]", "") %>%
+stringr::str_split(",") %>%
+`[[`(1) %>%
+as.numeric()
+x[1] < 0 & x[2] > 0
+}) %>%
+unlist() %>%
+which()
+global_idx = all_idx[[which_global_idx]]
+global_cor = all_cor[which_global_idx]
+global_cor_p = all_cor_p[which_global_idx]
+return_result =
+list(
+x = x,
+time1 = time1,
+y = y,
+time2 = time2,
+idx = all_idx,
+all_cor = all_cor,
+all_cor_p = all_cor_p,
+all_cor_p = all_cor_p,
+shift_time = shift_time,
+which_max_idx = which_max_idx,
+which_global_idx = which_global_idx,
+max_idx = max_idx,
+max_cor = all_cor[which_max_idx],
+global_idx = global_idx,
+global_cor = global_cor
+)
+}
+x = heart_data$heart
+time1 = heart_data$time
+y = step_data$step
+time2 = step_data$time
+min_matched_sample = 10
+progressbar = TRUE
+all_idx = NULL
+##time_tol unit is hour
+##step unit is hour
+x = as.numeric(x) %>%
+scale() %>%
+as.numeric()
+y = as.numeric(y) %>%
+scale() %>%
+as.numeric()
+time_window1 =
+seq(from = step / 2, to = time_tol, by = step)
+time_window2 =
+-rev(seq(from = step / 2, to = time_tol, by = step))
+step
+step = 1 / 60
+##time_tol unit is hour
+##step unit is hour
+x = as.numeric(x) %>%
+scale() %>%
+as.numeric()
+y = as.numeric(y) %>%
+scale() %>%
+as.numeric()
+time_window1 =
+seq(from = step / 2, to = time_tol, by = step)
+time_window2 =
+-rev(seq(from = step / 2, to = time_tol, by = step))
+time_tol
+time_tol = 1
+time_window1 =
+seq(from = step / 2, to = time_tol, by = step)
+time_window2 =
+-rev(seq(from = step / 2, to = time_tol, by = step))
+time_window = sort(c(time_window2, time_window1))
+temp_fun =
+function(temp_idx,
+time_window,
+x,
+y,
+time1,
+time2) {
+idx =
+time1 %>%
+purrr::map(function(x) {
+diff_time =
+difftime(x, time2, units = "hours")
+which(diff_time > time_window[temp_idx] &
+diff_time <= time_window[temp_idx + 1])
+})
+}
+bpparam = BiocParallel::MulticoreParam(workers = 10,
+progressbar = progressbar)
+if (is.null(all_idx)) {
+all_idx =
+BiocParallel::bplapply(
+X = 1:(length(time_window) - 1),
+FUN = temp_fun,
+time_window = time_window,
+x = x,
+y = y,
+time1 = time1,
+time2 = time2,
+BPPARAM = bpparam
+)
+}
+all_idx
+lapply(all_idx, function(x){
+length(unlist(x))
+}) %>%
+unlist() %>%
+plot()
+length(all_idx)
+all_idx[[1]]

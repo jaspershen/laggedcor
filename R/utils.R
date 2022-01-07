@@ -64,14 +64,14 @@ style_grey <- function(level, ...) {
 
 
 base_theme =
-  theme_bw() +
-  theme(
-    axis.text = element_text(size = 12),
-    axis.title = element_text(size = 13),
-    panel.grid.minor = element_blank(),
-    plot.background = element_rect(fill = "transparent"),
-    panel.background = element_rect(fill = "transparent"),
-    strip.text = element_text(size = 12)
+  ggplot2::theme_bw() +
+  ggplot2::theme(
+    axis.text =  ggplot2::element_text(size = 12),
+    axis.title =  ggplot2::element_text(size = 13),
+    panel.grid.minor =  ggplot2::element_blank(),
+    plot.background =  ggplot2::element_rect(fill = "transparent"),
+    panel.background =  ggplot2::element_rect(fill = "transparent"),
+    strip.text =  ggplot2::element_text(size = 12)
   )
 
 
@@ -122,4 +122,26 @@ fitpeaks <- function(y, pos) {
   colnames(huhn) <- tabnames
   
   huhn
+}
+
+
+
+get_os <- function() {
+  sysinf <- Sys.info()
+  if (!is.null(sysinf)) {
+    os <- sysinf["sysname"]
+    if (os == "Darwin") {
+      os <- "osx"
+    }
+  } else {
+    ## mystery machine
+    os <- .Platform$OS.type
+    if (grepl("^darwin", R.version$os)) {
+      os <- "osx"
+    }
+    if (grepl("linux-gnu", R.version$os)) {
+      os <- "linux"
+    }
+  }
+  tolower(os)
 }

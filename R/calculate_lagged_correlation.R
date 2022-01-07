@@ -94,7 +94,7 @@ calculate_lagged_correlation =
           })
       }
     
-    if (tinytools::get_os() == "windows") {
+    if (get_os() == "windows") {
       bpparam = BiocParallel::SnowParam(workers = threads,
                                         progressbar = TRUE)
     } else{
