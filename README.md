@@ -13,9 +13,7 @@
 
 ---
 
-The `laggedcor` is a collection of R packages designed for MS-based untargeted metabolomics data processing. All packages share an underlying design philosophy, grammar, and data structures.
-
-`laggedcor` is a comprehensive computational framework for MS-based untargeted metabolomics data processing and analysis, including raw data processing (peak detecting), data cleaning (missing value processing, data normalization, and integration), statistical analysis, metabolite annotation, and biological function mining (pathway enrichment, feature-based metabolic module analysis).
+The `laggedcor` is a R package used to calculate the lagged correlation for omics and wearable data.
 
 <img src="man/figures/laggedcor_all_packages.png" align="middle" alt="" width = "100%"/>
 
