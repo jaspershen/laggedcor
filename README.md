@@ -65,7 +65,7 @@ Palo Alto, CA
 
 ---
 
-If you use laggedcor in you publications, please cite this publication:
+If you use `laggedcor` in you publications, please cite this publication:
 
 X. Shen, R. Wang, X. Xiong, Y. Yin, Y. Cai, Z. Ma, N. Liu, and Z.-J.
 Zhu\* (Corresponding Author), Metabolic Reaction Network-based Recursive
