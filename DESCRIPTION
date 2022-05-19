@@ -1,6 +1,6 @@
 Package: laggedcor
 Title: Calculate the lagged correlation between two time-series data (wearable and omics data)
-Version: 0.99.1
+Version: 0.99.2
 Authors@R: c(
     person(given = "Xiaotao",
            family = "Shen",

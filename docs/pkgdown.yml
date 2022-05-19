@@ -1,4 +1,4 @@
-pandoc: 2.11.4
+pandoc: 2.17.1.1
 pkgdown: 2.0.1
 pkgdown_sha: ~
 articles:
@@ -7,7 +7,7 @@ articles:
   laggedcor_install: laggedcor_install.html
   more_software: more_software.html
   version0.4.0: version0.4.0.html
-last_built: 2022-01-07T04:31Z
+last_built: 2022-05-19T07:43Z
 urls:
   reference: https://jaspershen.github.io/laggedcor/reference
   article: https://jaspershen.github.io/laggedcor/articles

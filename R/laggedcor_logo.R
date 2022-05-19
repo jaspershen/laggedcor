@@ -24,10 +24,11 @@
 #' @examples
 #' laggedcor_logo()
 
-laggedcor_logo <- function(unicode = l10n_info()$`UTF-8`) {
-  cat(crayon::green("Thank you for using laggedcor!\n"))
-  cat(crayon::green("Version 0.0.1 (2021-12-24)\n"))
-  cat(crayon::green("More information: searching 'jaspershen laggedcor'.\n"))
+laggedcor_logo <- 
+  function(unicode = l10n_info()$`UTF-8`) {
+  message(crayon::green("Thank you for using laggedcor!"))
+  message(crayon::green("Version", laggedcor_version, "(", laggedcor_update_date, ")"))
+  message(crayon::green("More information: searching 'jaspershen laggedcor'."))
   
   logo =
     c(
@@ -76,3 +77,9 @@ print.laggedcor_logo <- function(x, ...) {
   cat(x, ..., sep = "\n")
   invisible(x)
 }
+
+laggedcor_version <- 
+  utils::packageVersion(pkg = "laggedcor")
+
+laggedcor_update_date <- 
+  as.character(Sys.Date())

@@ -41,14 +41,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">laggedcor</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-folder-open"></span>
      
     Help document
@@ -65,7 +65,7 @@
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-rss"></span>
      
     News &amp; Blog
@@ -120,10 +120,13 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Calculate lagged correlation between two time-series data</h1>
-                        <h4 data-toc-skip class="author">Xiaotao Shen (<a href="https://www.shenxt.info/" class="external-link uri">https://www.shenxt.info/</a>)</h4>
+      <h1 data-toc-skip>Calculate lagged correlation between two
+time-series data</h1>
+                        <h4 data-toc-skip class="author">Xiaotao Shen
+(<a href="https://www.shenxt.info/" class="external-link uri">https://www.shenxt.info/</a>)</h4>
                         
-            <h4 data-toc-skip class="date">Created on 2021-12-25 and updated on 2022-01-06</h4>
+            <h4 data-toc-skip class="date">Created on 2021-12-25 and
+updated on 2022-05-19</h4>
       
       
       <div class="hidden name"><code>lagged_correlation.Rmd</code></div>
@@ -136,7 +139,8 @@
 <h2 id="data-preparation">
 <strong>Data preparation</strong><a class="anchor" aria-label="anchor" href="#data-preparation"></a>
 </h2>
-<p><code>laggedcor</code> needs two time-series data and their corresponding time.</p>
+<p><code>laggedcor</code> needs two time-series data and their
+corresponding time.</p>
 <ul>
 <li><p>x: time-series 1. numeric vector.</p></li>
 <li><p>y: time-series 2. numeric vector.</p></li>
@@ -176,13 +180,15 @@
 <h2 id="calculate-lagged-correlation">
 <strong>Calculate lagged correlation</strong><a class="anchor" aria-label="anchor" href="#calculate-lagged-correlation"></a>
 </h2>
-<p>Then we calculate the lagged correlations between step and heart rate.</p>
+<p>Then we calculate the lagged correlations between step and heart
+rate.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">step_data</span><span class="op">)</span>
 <span class="co">#&gt; [1] 12960     2</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">heart_data</span><span class="op">)</span>
 <span class="co">#&gt; [1] 91948     2</span></code></pre></div>
-<p>The time-series data with less number of time point should be set as <code>x</code>.</p>
+<p>The time-series data with less number of time point should be set as
+<code>x</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">=</span> <span class="va">step_data</span><span class="op">$</span><span class="va">step</span>
 <span class="va">time1</span> <span class="op">=</span> <span class="va">step_data</span><span class="op">$</span><span class="va">time</span>
@@ -218,9 +224,12 @@
 <li><p><code>y</code>: time-series data 2.</p></li>
 <li><p><code>time1</code>: time-series data time 1.</p></li>
 <li><p><code>time2</code>: time-series data time 2.</p></li>
-<li><p><code>time_tol</code>: time tolerance for time shift. Unit is hour. 0.2 means ± 0.2 hour.</p></li>
-<li><p><code>step</code>: step means the matching window, unit is hour.</p></li>
-<li><p><code>min_matched_sample</code>: Minimum for match sample number.</p></li>
+<li><p><code>time_tol</code>: time tolerance for time shift. Unit is
+hour. 0.2 means ± 0.2 hour.</p></li>
+<li><p><code>step</code>: step means the matching window, unit is
+hour.</p></li>
+<li><p><code>min_matched_sample</code>: Minimum for match sample
+number.</p></li>
 <li><p><code>threads</code>: thread number.</p></li>
 <li><p><code>cor_method</code>: spearman or pearson.</p></li>
 </ul>
@@ -258,7 +267,9 @@
 <span class="co">#&gt; <span style="color: #00BB00;">progressbar : TRUE</span> </span>
 <span class="co">#&gt; <span style="color: #00BB00;">threads : 5</span> </span>
 <span class="co">#&gt; <span style="color: #00BB00;">cor_method : spearman</span></span></code></pre></div>
-<p>We can see that the index of max correlation is 11 and index of global correlation is 12, means that the max correlation is achieved from a shifted time.</p>
+<p>We can see that the index of max correlation is 11 and index of
+global correlation is 12, means that the max correlation is achieved
+from a shifted time.</p>
 </div>
 <div class="section level2">
 <h2 id="result-of-lagged-correlation-1">
@@ -271,7 +282,9 @@
 <span class="fu"><a href="../reference/extract_global_cor.html">extract_global_cor</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">result</span><span class="op">)</span>
 <span class="co">#&gt;    (-1,1] </span>
 <span class="co">#&gt; 0.5446995</span></code></pre></div>
-<p>We can see that when the shift time is “(-1.5,-0.5]”, we get the max correaltion: 0.58. This means x (step) changes before y (heart rate).</p>
+<p>We can see that when the shift time is “(-1.5,-0.5]”, we get the max
+correaltion: 0.58. This means x (step) changes before y (heart
+rate).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/extract_all_cor.html">extract_all_cor</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
 <span class="co">#&gt;  (-11,-9]   (-9,-7]   (-7,-5]   (-5,-3]   (-3,-1]    (-1,1]     (1,3]     (3,5] </span>
@@ -333,7 +346,8 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>laggedcor Developed by Xiaotao Shen. <br> from <i class="fa fa-university"></i> Stanford University <br><i class="fa fa-clinic-medical"></i>School of Medicine <br><i class="fa fa-dna"></i> Genetics Department <br><i class="fa fa-laptop-code"></i> <a href="https://www.shenxt.info/files/wechat_QR.jpg" class="external-link">More softare</a></p>
+<p>laggedcor Developed by Xiaotao Shen. <br> from
+<i class="fa fa-university"></i> Stanford University <br><i class="fa fa-clinic-medical"></i>School of Medicine <br><i class="fa fa-dna"></i> Genetics Department <br><i class="fa fa-laptop-code"></i> <a href="https://www.shenxt.info/files/wechat_QR.jpg" class="external-link">More softare</a></p>
 </div>
 
 <div class="pkgdown">
