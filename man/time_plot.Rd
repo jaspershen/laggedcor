@@ -7,8 +7,11 @@
 time_plot(
   x,
   time,
+  day,
   color = "blue",
   y_axis_name = "y",
+  sun_rise_time = "6:00:00",
+  sun_set_time = "18:00:00",
   time_gap = 12,
   add_point = FALSE
 )
@@ -18,9 +21,15 @@ time_plot(
 
 \item{time}{time}
 
+\item{day}{day}
+
 \item{color}{color}
 
 \item{y_axis_name}{y_axis_name}
+
+\item{sun_rise_time}{should be 24 hour format, default "6:00:00"}
+
+\item{sun_set_time}{should be 24 hour format, default "18:00:00"}
 
 \item{time_gap}{time_gap}
 

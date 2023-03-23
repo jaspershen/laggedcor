@@ -8,6 +8,9 @@
 #' @param y_axis_name y_axis_name
 #' @param time_gap time_gap
 #' @param add_point add_point
+#' @param day day
+#' @param sun_rise_time should be 24 hour format, default "6:00:00"
+#' @param sun_set_time should be 24 hour format, default "18:00:00"
 #' @export
 #' @return A ggplot2 object.
 #' @examples
@@ -18,20 +21,28 @@
 #'
 #' time_plot(x, time)
 
-time_plot = function(x,
-                     time,
-                     color = "blue",
-                     y_axis_name = "y",
-                     time_gap = 12,
-                     add_point = FALSE) {
-  x = data.frame(time, value = as.numeric(x),
+time_plot <- function(x,
+                      time,
+                      day,
+                      color = "blue",
+                      y_axis_name = "y",
+                      sun_rise_time = "6:00:00",
+                      sun_set_time = "18:00:00",
+                      time_gap = 12,
+                      add_point = FALSE) {
+  if (missing(day)) {
+    day <- "1990-05-21"
+  }
+  x = data.frame(time,
+                 day,
+                 value = as.numeric(x),
                  stringsAsFactors = FALSE)
   
   sun_rise =
-    lubridate::ymd_hms(paste(unique(lubridate::date(x$time)), c("6:00:00")),
+    lubridate::ymd_hms(paste(unique(lubridate::date(x$time)), c(sun_rise_time)),
                        tz = lubridate::tz(x$time))
   sun_set =
-    lubridate::ymd_hms(paste(unique(lubridate::date(x$time)), c("18:00:00")),
+    lubridate::ymd_hms(paste(unique(lubridate::date(x$time)), c(sun_set_time)),
                        tz = lubridate::tz(x$time))
   
   day_night_df =
