@@ -19,6 +19,7 @@
 #' @import ggsci
 #' @import lubridate
 #' @import scales
+#' @import hms
 #' @importFrom methods new
 #' @importClassesFrom massdataset tidymass_parameter
 #' @examples

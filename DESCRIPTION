@@ -41,7 +41,8 @@ Imports:
     massdataset,
     methods,
     stats,
-    utils
+    utils,
+    hms
 Suggests: 
     knitr,
     rmarkdown

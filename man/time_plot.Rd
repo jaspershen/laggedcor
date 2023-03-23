@@ -7,21 +7,19 @@
 time_plot(
   x,
   time,
-  day,
   color = "blue",
-  y_axis_name = "y",
+  y_axis_name = "Value",
   sun_rise_time = "6:00:00",
   sun_set_time = "18:00:00",
   time_gap = 12,
-  add_point = FALSE
+  add_point = FALSE,
+  facet = FALSE
 )
 }
 \arguments{
 \item{x}{x}
 
 \item{time}{time}
-
-\item{day}{day}
 
 \item{color}{color}
 
@@ -34,6 +32,8 @@ time_plot(
 \item{time_gap}{time_gap}
 
 \item{add_point}{add_point}
+
+\item{facet}{facet or not.}
 }
 \value{
 A ggplot2 object.
