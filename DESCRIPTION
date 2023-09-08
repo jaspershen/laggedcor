@@ -49,5 +49,5 @@ Suggests:
 VignetteBuilder: knitr
 biocViews: Technology
 Remotes: 
-    tidymass/massdataset
+    tidymass/massdataset,
     tidywearable/wearabledataset
