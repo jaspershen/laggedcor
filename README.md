@@ -9,13 +9,13 @@
 
 ---
 
+`laggedcor` is a part of [tidywearable](https://tidywearable.github.io/).
+
 ## **About**
 
 ---
 
 The `laggedcor` is an R package used to calculate the lagged correlation for omics and wearable data.
-
-<img src="man/figures/laggedcor_all_packages.png" align="middle" alt="" width = "100%"/>
 
 ## **Installation**
 

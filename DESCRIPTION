@@ -18,7 +18,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: false
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Depends: 
     R (>= 4.1)
 Imports: 
@@ -50,3 +50,4 @@ VignetteBuilder: knitr
 biocViews: Technology
 Remotes: 
     tidymass/massdataset
+    tidywearable/wearabledataset

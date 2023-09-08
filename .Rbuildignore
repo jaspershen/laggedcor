@@ -15,5 +15,7 @@ vignettes/example
 vignettes/demo_data
 vignettes/
 
+.RData
+.Rhistory
 
 man/figures
