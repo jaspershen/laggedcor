@@ -1,6 +1,6 @@
 destination: docs
 
-url: https://jaspershen.github.io/laggedcor/
+url: https://tidywerable.github.io/laggedcor/
 
 home:
   strip_header: false
@@ -30,29 +30,6 @@ template:
     ganalytics: UA-000000-01
 
 reference:
-  - title: Lagged correlation
-    desc: Calculate lagged correlation
-    contents:
-    - calculate_lagged_correlation
-    - evaluate_lagged_cor
-    - lagged_alignment_plot
-    - lagged_scatter_plot
-    - time_plot
-  - title: Extract data
-    desc: Extract data from lagged_cor_result
-    contents:
-    - extract_all_cor_p
-    - extract_all_cor
-    - extract_global_cor
-    - extract_max_cor
-    - extract_shift_time
-  - title: Others
-    desc: Other functions
-    contents:
-    - laggedcor_install
-    - laggedcor_logo
-    - laggedcor_conflicts
-    - laggedcor_packages
 
 navbar:
   title: "sparklyr"

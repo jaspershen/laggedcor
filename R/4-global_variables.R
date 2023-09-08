@@ -9,5 +9,8 @@ globalVariables(names = c(
   "xend",
   "yend",
   "..count..",
-  "value"
+  "value",
+  "accurate_time",
+  "start_time",
+  "end_time"
 ))

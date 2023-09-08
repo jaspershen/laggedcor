@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">laggedcor</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
       </span>
     </div>
 
@@ -99,58 +99,87 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">lagged_alignment_plot</span><span class="op">(</span>
-  <span class="va">object</span>,
-  x_color <span class="op">=</span> <span class="st">"#631879FF"</span>,
-  y_color <span class="op">=</span> <span class="st">"#E377C2FF"</span>,
-  x_name <span class="op">=</span> <span class="st">"x"</span>,
-  y_name <span class="op">=</span> <span class="st">"y"</span>,
-  which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"global"</span>, <span class="st">"max"</span><span class="op">)</span>,
-  x_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span><span class="op">)</span>,
-  non_matched_point_size <span class="op">=</span> <span class="fl">0.1</span>,
-  y_point_size <span class="op">=</span> <span class="fl">1</span>,
-  x_point_size <span class="op">=</span> <span class="fl">3</span>,
-  integrated <span class="op">=</span> <span class="cn">FALSE</span>,
-  add_connect_line <span class="op">=</span> <span class="cn">FALSE</span>,
-  add_point <span class="op">=</span> <span class="cn">FALSE</span>,
-  time_gap <span class="op">=</span> <span class="fl">4</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lagged_alignment_plot</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  x_color <span class="op">=</span> <span class="st">"#631879FF"</span>,</span>
+<span>  y_color <span class="op">=</span> <span class="st">"#E377C2FF"</span>,</span>
+<span>  x_name <span class="op">=</span> <span class="st">"x"</span>,</span>
+<span>  y_name <span class="op">=</span> <span class="st">"y"</span>,</span>
+<span>  which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"global"</span>, <span class="st">"max"</span><span class="op">)</span>,</span>
+<span>  x_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span><span class="op">)</span>,</span>
+<span>  non_matched_point_size <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  y_point_size <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  x_point_size <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  integrated <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  add_connect_line <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  add_point <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  time_gap <span class="op">=</span> <span class="fl">4</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>a lagged_scatter_result class object.</p></dd>
+
+
 <dt>x_color</dt>
 <dd><p>x_color</p></dd>
+
+
 <dt>y_color</dt>
 <dd><p>y_color</p></dd>
+
+
 <dt>x_name</dt>
 <dd><p>x_name</p></dd>
+
+
 <dt>y_name</dt>
 <dd><p>y_name</p></dd>
+
+
 <dt>which</dt>
 <dd><p>global or maz</p></dd>
+
+
 <dt>x_limit</dt>
 <dd><p>x_limit</p></dd>
+
+
 <dt>non_matched_point_size</dt>
 <dd><p>non_matched_point_size</p></dd>
+
+
 <dt>y_point_size</dt>
 <dd><p>y_point_size</p></dd>
+
+
 <dt>x_point_size</dt>
 <dd><p>x_point_size</p></dd>
+
+
 <dt>integrated</dt>
 <dd><p>integrated</p></dd>
+
+
 <dt>add_connect_line</dt>
 <dd><p>add_connect_line</p></dd>
+
+
 <dt>add_point</dt>
 <dd><p>add_point</p></dd>
+
+
 <dt>time_gap</dt>
 <dd><p>time_gap in x axis.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A ggplot2 object.</p>
+    
+
+<p>A ggplot2 object.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -160,38 +189,38 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"object"</span>, package <span class="op">=</span> <span class="st">"laggedcor"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">lagged_alignment_plot</span><span class="op">(</span>object <span class="op">=</span> <span class="va">object</span>,</span>
-<span class="r-in">                      x_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"object"</span>, package <span class="op">=</span> <span class="st">"laggedcor"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">lagged_alignment_plot</span><span class="op">(</span>object <span class="op">=</span> <span class="va">object</span>,</span></span>
+<span class="r-in"><span>                      x_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="lagged_alignment_plot-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu">lagged_alignment_plot</span><span class="op">(</span>object <span class="op">=</span> <span class="va">object</span>,</span>
-<span class="r-in">                      x_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10000</span><span class="op">)</span>,</span>
-<span class="r-in">                      time_gap <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">lagged_alignment_plot</span><span class="op">(</span>object <span class="op">=</span> <span class="va">object</span>,</span></span>
+<span class="r-in"><span>                      x_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10000</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                      time_gap <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="lagged_alignment_plot-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">lagged_alignment_plot</span><span class="op">(</span></span>
-<span class="r-in">  object <span class="op">=</span> <span class="va">object</span>,</span>
-<span class="r-in">  x_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span>,</span>
-<span class="r-in">  time_gap <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">  add_point <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">  x_point_size <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">  y_point_size <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">  integrated <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">  add_connect_line <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 91947 rows containing missing values (geom_segment).</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">lagged_alignment_plot</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  object <span class="op">=</span> <span class="va">object</span>,</span></span>
+<span class="r-in"><span>  x_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  time_gap <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  add_point <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  x_point_size <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  y_point_size <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  integrated <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  add_connect_line <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 91947 rows containing missing values (`geom_segment()`).</span>
 <span class="r-plt img"><img src="lagged_alignment_plot-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">lagged_alignment_plot</span><span class="op">(</span></span>
-<span class="r-in">  object <span class="op">=</span> <span class="va">object</span>,</span>
-<span class="r-in">  x_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span>,</span>
-<span class="r-in">  time_gap <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">  add_point <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">  x_point_size <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">  y_point_size <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">  integrated <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">lagged_alignment_plot</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  object <span class="op">=</span> <span class="va">object</span>,</span></span>
+<span class="r-in"><span>  x_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  time_gap <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  add_point <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  x_point_size <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  y_point_size <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  integrated <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="lagged_alignment_plot-4.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -203,8 +232,7 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>laggedcor Developed by Xiaotao Shen. <br> from
-<i class="fa fa-university"></i> Stanford University <br><i class="fa fa-clinic-medical"></i>School of Medicine <br><i class="fa fa-dna"></i> Genetics Department <br><i class="fa fa-laptop-code"></i> <a href="https://www.shenxt.info/files/wechat_QR.jpg" class="external-link">More softare</a></p>
+  <p></p><p>laggedcor Developed by Xiaotao Shen. <br> from <i class="fa fa-university"></i> Stanford University <br><i class="fa fa-clinic-medical"></i>School of Medicine <br><i class="fa fa-dna"></i> Genetics Department <br><i class="fa fa-laptop-code"></i> <a href="https://www.shenxt.info/files/wechat_QR.jpg" class="external-link">More softare</a></p>
 </div>
 
 <div class="pkgdown">

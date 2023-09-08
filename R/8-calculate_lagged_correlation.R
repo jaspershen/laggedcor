@@ -45,7 +45,7 @@
 #' object
 #' }
 
-calculate_lagged_correlation =
+calculate_lagged_correlation <-
   function(x,
            y,
            time1,
@@ -142,7 +142,7 @@ calculate_lagged_correlation =
     all_cor_p =
       all_cor_result %>%
       purrr::map(function(x) {
-        if (is.na(x)) {
+        if (class(all_cor_result[[1]]) != "htest") {
           return(NA)
         } else{
           x$p.value
@@ -153,7 +153,7 @@ calculate_lagged_correlation =
     all_cor =
       all_cor_result %>%
       purrr::map(function(x) {
-        if (is.na(x)) {
+        if (class(all_cor_result[[1]]) != "htest") {
           return(NA)
         } else{
           x$estimate

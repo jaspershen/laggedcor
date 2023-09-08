@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">laggedcor</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
       </span>
     </div>
 
@@ -99,31 +99,42 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">lagged_scatter_plot</span><span class="op">(</span>
-  <span class="va">object</span>,
-  x_name <span class="op">=</span> <span class="st">"x"</span>,
-  y_name <span class="op">=</span> <span class="st">"y"</span>,
-  which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"global"</span>, <span class="st">"max"</span><span class="op">)</span>,
-  hex <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lagged_scatter_plot</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  x_name <span class="op">=</span> <span class="st">"x"</span>,</span>
+<span>  y_name <span class="op">=</span> <span class="st">"y"</span>,</span>
+<span>  which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"global"</span>, <span class="st">"max"</span><span class="op">)</span>,</span>
+<span>  hex <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>a lagged_scatter_result class object.</p></dd>
+
+
 <dt>x_name</dt>
 <dd><p>x_name</p></dd>
+
+
 <dt>y_name</dt>
 <dd><p>y_name.</p></dd>
+
+
 <dt>which</dt>
 <dd><p>global and max</p></dd>
+
+
 <dt>hex</dt>
 <dd><p>TRUE or not</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A ggplot2 object.</p>
+    
+
+<p>A ggplot2 object.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -133,25 +144,29 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"object"</span>, package <span class="op">=</span> <span class="st">"laggedcor"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">lagged_scatter_plot</span><span class="op">(</span></span>
-<span class="r-in">  object <span class="op">=</span> <span class="va">object</span>,</span>
-<span class="r-in">  x_name <span class="op">=</span> <span class="st">"Step"</span>,</span>
-<span class="r-in">  y_name <span class="op">=</span> <span class="st">"HR"</span>,</span>
-<span class="r-in">  hex <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span class="r-in">  which <span class="op">=</span> <span class="st">"max"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `geom_smooth()` using formula 'y ~ x'</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"object"</span>, package <span class="op">=</span> <span class="st">"laggedcor"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">lagged_scatter_plot</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  object <span class="op">=</span> <span class="va">object</span>,</span></span>
+<span class="r-in"><span>  x_name <span class="op">=</span> <span class="st">"Step"</span>,</span></span>
+<span class="r-in"><span>  y_name <span class="op">=</span> <span class="st">"HR"</span>,</span></span>
+<span class="r-in"><span>  hex <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
+<span class="r-in"><span>  which <span class="op">=</span> <span class="st">"max"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `after_stat(count)` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">laggedcor</span> package.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   Please report the issue to the authors.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> `geom_smooth()` using formula = 'y ~ x'</span>
 <span class="r-plt img"><img src="lagged_scatter_plot-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">lagged_scatter_plot</span><span class="op">(</span></span>
-<span class="r-in">  object <span class="op">=</span> <span class="va">object</span>,</span>
-<span class="r-in">  x_name <span class="op">=</span> <span class="st">"Step"</span>,</span>
-<span class="r-in">  y_name <span class="op">=</span> <span class="st">"HR"</span>,</span>
-<span class="r-in">  hex <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span class="r-in">  which <span class="op">=</span> <span class="st">"global"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `geom_smooth()` using formula 'y ~ x'</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">lagged_scatter_plot</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  object <span class="op">=</span> <span class="va">object</span>,</span></span>
+<span class="r-in"><span>  x_name <span class="op">=</span> <span class="st">"Step"</span>,</span></span>
+<span class="r-in"><span>  y_name <span class="op">=</span> <span class="st">"HR"</span>,</span></span>
+<span class="r-in"><span>  hex <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
+<span class="r-in"><span>  which <span class="op">=</span> <span class="st">"global"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> `geom_smooth()` using formula = 'y ~ x'</span>
 <span class="r-plt img"><img src="lagged_scatter_plot-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -163,8 +178,7 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>laggedcor Developed by Xiaotao Shen. <br> from
-<i class="fa fa-university"></i> Stanford University <br><i class="fa fa-clinic-medical"></i>School of Medicine <br><i class="fa fa-dna"></i> Genetics Department <br><i class="fa fa-laptop-code"></i> <a href="https://www.shenxt.info/files/wechat_QR.jpg" class="external-link">More softare</a></p>
+  <p></p><p>laggedcor Developed by Xiaotao Shen. <br> from <i class="fa fa-university"></i> Stanford University <br><i class="fa fa-clinic-medical"></i>School of Medicine <br><i class="fa fa-dna"></i> Genetics Department <br><i class="fa fa-laptop-code"></i> <a href="https://www.shenxt.info/files/wechat_QR.jpg" class="external-link">More softare</a></p>
 </div>
 
 <div class="pkgdown">

@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">laggedcor</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
       </span>
     </div>
 
@@ -99,49 +99,72 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">calculate_lagged_correlation</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">y</span>,
-  <span class="va">time1</span>,
-  <span class="va">time2</span>,
-  time_tol <span class="op">=</span> <span class="fl">1</span>,
-  step <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">60</span>,
-  min_matched_sample <span class="op">=</span> <span class="fl">10</span>,
-  progressbar <span class="op">=</span> <span class="cn">TRUE</span>,
-  all_idx <span class="op">=</span> <span class="cn">NULL</span>,
-  threads <span class="op">=</span> <span class="fl">10</span>,
-  cor_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"spearman"</span>, <span class="st">"pearson"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calculate_lagged_correlation</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">y</span>,</span>
+<span>  <span class="va">time1</span>,</span>
+<span>  <span class="va">time2</span>,</span>
+<span>  time_tol <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  step <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">60</span>,</span>
+<span>  min_matched_sample <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  progressbar <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  all_idx <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  threads <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  cor_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"spearman"</span>, <span class="st">"pearson"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>Time-series data 1. A numeric vector.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>Time-series data 2. A numeric vector.</p></dd>
+
+
 <dt>time1</dt>
 <dd><p>Time-series data 1. A time vector (POSIXct).</p></dd>
+
+
 <dt>time2</dt>
 <dd><p>Time-series data 2. A time vector (POSIXct).</p></dd>
+
+
 <dt>time_tol</dt>
 <dd><p>Time tolerance to match time-series 1 and time-series data 2. Unit is hour.</p></dd>
+
+
 <dt>step</dt>
 <dd><p>Step to calculate lagged correlation.</p></dd>
+
+
 <dt>min_matched_sample</dt>
 <dd><p>Minimum matched sample numner for one lagged correlation.</p></dd>
+
+
 <dt>progressbar</dt>
 <dd><p>progressbar</p></dd>
+
+
 <dt>all_idx</dt>
 <dd><p>all_idx</p></dd>
+
+
 <dt>threads</dt>
 <dd><p>threads number</p></dd>
+
+
 <dt>cor_method</dt>
 <dd><p>spearman or pearson.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A lagged_cor class object.</p>
+    
+
+<p>A lagged_cor class object.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -151,34 +174,34 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"heart_data"</span>, package <span class="op">=</span> <span class="st">"laggedcor"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"step_data"</span>, package <span class="op">=</span> <span class="st">"laggedcor"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">heart_data</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">step_data</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">=</span> <span class="va">step_data</span><span class="op">$</span><span class="va">step</span></span>
-<span class="r-in"><span class="va">time1</span> <span class="op">=</span> <span class="va">step_data</span><span class="op">$</span><span class="va">time</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">y</span> <span class="op">=</span> <span class="va">heart_data</span><span class="op">$</span><span class="va">heart</span></span>
-<span class="r-in"><span class="va">time2</span> <span class="op">=</span> <span class="va">heart_data</span><span class="op">$</span><span class="va">time</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">object</span> <span class="op">=</span></span>
-<span class="r-in">  <span class="fu">calculate_lagged_correlation</span><span class="op">(</span></span>
-<span class="r-in">    x <span class="op">=</span> <span class="va">x</span>,</span>
-<span class="r-in">    y <span class="op">=</span> <span class="va">y</span>,</span>
-<span class="r-in">    time1 <span class="op">=</span> <span class="va">time1</span>,</span>
-<span class="r-in">    time2 <span class="op">=</span> <span class="va">time2</span>,</span>
-<span class="r-in">    time_tol <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span class="r-in">    step <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">60</span>,</span>
-<span class="r-in">    min_matched_sample <span class="op">=</span> <span class="fl">10</span>,</span>
-<span class="r-in">    progressbar <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">    threads <span class="op">=</span> <span class="fl">5</span>,</span>
-<span class="r-in">    cor_method <span class="op">=</span> <span class="st">"spearman"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="va">object</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"heart_data"</span>, package <span class="op">=</span> <span class="st">"laggedcor"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"step_data"</span>, package <span class="op">=</span> <span class="st">"laggedcor"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">heart_data</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">step_data</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">=</span> <span class="va">step_data</span><span class="op">$</span><span class="va">step</span></span></span>
+<span class="r-in"><span><span class="va">time1</span> <span class="op">=</span> <span class="va">step_data</span><span class="op">$</span><span class="va">time</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">=</span> <span class="va">heart_data</span><span class="op">$</span><span class="va">heart</span></span></span>
+<span class="r-in"><span><span class="va">time2</span> <span class="op">=</span> <span class="va">heart_data</span><span class="op">$</span><span class="va">time</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">object</span> <span class="op">=</span></span></span>
+<span class="r-in"><span>  <span class="fu">calculate_lagged_correlation</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="va">x</span>,</span></span>
+<span class="r-in"><span>    y <span class="op">=</span> <span class="va">y</span>,</span></span>
+<span class="r-in"><span>    time1 <span class="op">=</span> <span class="va">time1</span>,</span></span>
+<span class="r-in"><span>    time2 <span class="op">=</span> <span class="va">time2</span>,</span></span>
+<span class="r-in"><span>    time_tol <span class="op">=</span> <span class="fl">0.1</span>,</span></span>
+<span class="r-in"><span>    step <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">60</span>,</span></span>
+<span class="r-in"><span>    min_matched_sample <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>    progressbar <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    threads <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>    cor_method <span class="op">=</span> <span class="st">"spearman"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">object</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -189,8 +212,7 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>laggedcor Developed by Xiaotao Shen. <br> from
-<i class="fa fa-university"></i> Stanford University <br><i class="fa fa-clinic-medical"></i>School of Medicine <br><i class="fa fa-dna"></i> Genetics Department <br><i class="fa fa-laptop-code"></i> <a href="https://www.shenxt.info/files/wechat_QR.jpg" class="external-link">More softare</a></p>
+  <p></p><p>laggedcor Developed by Xiaotao Shen. <br> from <i class="fa fa-university"></i> Stanford University <br><i class="fa fa-clinic-medical"></i>School of Medicine <br><i class="fa fa-dna"></i> Genetics Department <br><i class="fa fa-laptop-code"></i> <a href="https://www.shenxt.info/files/wechat_QR.jpg" class="external-link">More softare</a></p>
 </div>
 
 <div class="pkgdown">
