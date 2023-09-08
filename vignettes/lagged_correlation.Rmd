@@ -149,10 +149,10 @@ evaluate_lagged_cor(object = result, plot = TRUE)
 ## **Some results**
 
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
-lagged_scatter_plot(object = object, hex = TRUE, which = "global")
-lagged_scatter_plot(object = object, hex = TRUE, which = "max")
+lagged_scatter_plot(object = result, hex = TRUE, which = "global")
+lagged_scatter_plot(object = result, hex = TRUE, which = "max")
 ```
 
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
-lagged_alignment_plot(object = object, which = "global", x_limit = c(1,50000))
+lagged_alignment_plot(object = result, which = "global", x_limit = c(1,50000))
 ```
