@@ -57,7 +57,7 @@ lagged_scatter_plot(
   object = object,
   x_name = "Step",
   y_name = "HR",
-  hex = TRUE, 
+  hex = TRUE,
   which = "max"
 )
 
@@ -65,7 +65,7 @@ lagged_scatter_plot(
   object = object,
   x_name = "Step",
   y_name = "HR",
-  hex = TRUE, 
+  hex = TRUE,
   which = "global"
 )
 }

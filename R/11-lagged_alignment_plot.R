@@ -75,6 +75,10 @@ lagged_alignment_plot =
            time_gap = 4) {
     which = match.arg(which)
     
+    if(is.null(object)){
+      return(NULL)
+    }
+    
     if (which == "global") {
       idx = object@global_idx
       shift = object@shift_time[object@which_global_idx]

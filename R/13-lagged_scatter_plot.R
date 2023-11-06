@@ -1,6 +1,6 @@
 #' Lagged Scatter Plot
 #'
-#' This function creates a scatter plot of lagged time series data, 
+#' This function creates a scatter plot of lagged time series data,
 #' highlighting the correlation between two variables at different lags.
 #' The plot can be a regular scatter plot or a hexbin plot.
 #'
@@ -12,52 +12,56 @@
 #' @param which Determines the type of index to use for plotting, either "global" or "max".
 #'              "global" uses the global index and "max" uses the index of maximum correlation.
 #'              Defaults to c("global", "max").
-#' @param hex A logical value, if TRUE, a hexbin plot will be created, otherwise a regular 
+#' @param hex A logical value, if TRUE, a hexbin plot will be created, otherwise a regular
 #'            scatter plot. Defaults to FALSE.
 #'
 #' @return A ggplot object representing the lagged scatter plot with appropriate annotations.
 #'
 #' @details The function calculates the average y-values at specific lags defined by the
-#'          index chosen (global or max). The scatter plot is then created using ggplot2 
-#'          and further annotated with correlation information. If `hex` is TRUE, the plot 
-#'          uses `stat_binhex` to create hexagonal binning. Otherwise, points are plotted 
-#'          directly with `geom_point`. A linear model fit is added in both cases using 
+#'          index chosen (global or max). The scatter plot is then created using ggplot2
+#'          and further annotated with correlation information. If `hex` is TRUE, the plot
+#'          uses `stat_binhex` to create hexagonal binning. Otherwise, points are plotted
+#'          directly with `geom_point`. A linear model fit is added in both cases using
 #'          `geom_smooth`.
 #'
 #'
-#' @note The function expects the `object` to have specific slots: `@global_idx`, `@max_idx`, 
-#'       `@shift_time`, `@global_cor`, `@max_cor`, `@which_max_idx`, `@time1`, `@time2`, 
-#'       `@x`, and `@y`. If `hex` is TRUE, `@which_global_idx` is also used. It is important 
-#'       to ensure these slots are present in the object passed to the function. Also, 
+#' @note The function expects the `object` to have specific slots: `@global_idx`, `@max_idx`,
+#'       `@shift_time`, `@global_cor`, `@max_cor`, `@which_max_idx`, `@time1`, `@time2`,
+#'       `@x`, and `@y`. If `hex` is TRUE, `@which_global_idx` is also used. It is important
+#'       to ensure these slots are present in the object passed to the function. Also,
 #'       the function assumes that `base_theme` is defined elsewhere in the user's environment.
 #' @author Xiaotao Shen
 #' \email{shenxt1990@@outlook.com}
 #' @export
-#' @examples 
+#' @examples
 #' data("object", package = "laggedcor")
 #' lagged_scatter_plot(
 #'   object = object,
 #'   x_name = "Step",
 #'   y_name = "HR",
-#'   hex = TRUE, 
+#'   hex = TRUE,
 #'   which = "max"
 #' )
-#' 
+#'
 #' lagged_scatter_plot(
 #'   object = object,
 #'   x_name = "Step",
 #'   y_name = "HR",
-#'   hex = TRUE, 
+#'   hex = TRUE,
 #'   which = "global"
 #' )
 
-lagged_scatter_plot =
+lagged_scatter_plot <-
   function(object,
            x_name = "x",
            y_name = "y",
            which = c("global", "max"),
            hex = FALSE) {
     which = match.arg(which)
+    
+    if (is.null(object)) {
+      return(NULL)
+    }
     
     if (which == "global") {
       idx = object@global_idx
