@@ -33,16 +33,16 @@
 #'\dontrun{
 #' data("heart_data", package = "laggedcor")
 #' data("step_data", package = "laggedcor")
-#' 
+#'
 #' dim(heart_data)
 #' dim(step_data)
-#' 
+#'
 #' x = step_data$step
 #' time1 = step_data$time
-#' 
+#'
 #' y = heart_data$heart
 #' time2 = heart_data$time
-#' 
+#'
 #' object =
 #'   calculate_lagged_correlation(
 #'     x = x,
@@ -72,6 +72,9 @@ calculate_lagged_correlation <-
            threads = 10,
            cor_method = c("spearman", "pearson")) {
     cor_method = match.arg(cor_method)
+    if (length(x) == 0 | length(y) == 0) {
+      return(NULL)
+    }
     ##time_tol unit is hour
     ##step unit is hour
     x = as.numeric(x) %>%
