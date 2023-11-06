@@ -2,18 +2,32 @@
 % Please edit documentation in R/10-extract_data.R
 \name{extract_global_cor}
 \alias{extract_global_cor}
-\title{extract_global_cor}
+\title{Extract Global Correlation Value}
 \usage{
 extract_global_cor(object)
 }
 \arguments{
-\item{object}{a lagged_scatter_result class object.}
+\item{object}{An object that includes \code{all_cor}, \code{shift_time}, and \code{which_global_idx} attributes.}
 }
 \value{
-A vector.
+A single named element from the \code{all_cor} attribute. The name is the shift time associated
+with this correlation value, indexed by \code{which_global_idx}.
 }
 \description{
-extract_global_cor
+Retrieves a specific correlation value indexed by \code{which_global_idx} from the \code{all_cor} attribute
+of the given object, with the associated shift time as its name.
+}
+\details{
+This function is specifically designed to extract a correlation value that is designated as
+"global" within the context of the object's dataset. The \code{which_global_idx} is expected to be
+an attribute within the object that specifies the index of this global correlation value in
+the \code{all_cor} vector. The corresponding shift time is extracted from the \code{shift_time} attribute
+and assigned as the name to the returned value.
+}
+\note{
+The function assumes that the object has attributes \code{all_cor} and \code{shift_time} with the same length,
+and \code{which_global_idx} that points to a valid index within them. The purpose of \code{which_global_idx}
+should be documented elsewhere, detailing why this particular index is significant.
 }
 \examples{
 data("object", package = "laggedcor")

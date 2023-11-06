@@ -2,7 +2,7 @@
 % Please edit documentation in R/11-lagged_alignment_plot.R
 \name{lagged_alignment_plot}
 \alias{lagged_alignment_plot}
-\title{lagged_alignment_plot}
+\title{Lagged Alignment Plot}
 \usage{
 lagged_alignment_plot(
   object,
@@ -22,39 +22,45 @@ lagged_alignment_plot(
 )
 }
 \arguments{
-\item{object}{a lagged_scatter_result class object.}
+\item{object}{An object that includes time series and index attributes required for plotting.}
 
-\item{x_color}{x_color}
+\item{x_color}{Color for the x series in the plot.}
 
-\item{y_color}{y_color}
+\item{y_color}{Color for the y series in the plot.}
 
-\item{x_name}{x_name}
+\item{x_name}{Label for the x series.}
 
-\item{y_name}{y_name}
+\item{y_name}{Label for the y series.}
 
-\item{which}{global or maz}
+\item{which}{Specifies which index to use for alignment ('global' or 'max').}
 
-\item{x_limit}{x_limit}
+\item{x_limit}{A numeric vector specifying the x-axis limits.}
 
-\item{non_matched_point_size}{non_matched_point_size}
+\item{non_matched_point_size}{Size of the points for non-matched elements in the plot.}
 
-\item{y_point_size}{y_point_size}
+\item{y_point_size}{Size of the points for y series in the plot.}
 
-\item{x_point_size}{x_point_size}
+\item{x_point_size}{Size of the points for x series in the plot.}
 
-\item{integrated}{integrated}
+\item{integrated}{Logical, if TRUE the plot will integrate over the index to create average values.}
 
-\item{add_connect_line}{add_connect_line}
+\item{add_connect_line}{Logical, if TRUE connection lines will be added to the plot.}
 
-\item{add_point}{add_point}
+\item{add_point}{Logical, if TRUE points will be added to the plot.}
 
-\item{time_gap}{time_gap in x axis.}
+\item{time_gap}{The gap of time between breaks in the x-axis.}
 }
 \value{
-A ggplot2 object.
+A ggplot object representing the lagged alignment plot.
 }
 \description{
-lagged_alignment_plot
+Generates a plot to visualize the alignment of two time-series data sets at specified lag times.
+The function allows for customization of colors, names, point sizes, and various other plotting options.
+}
+\details{
+The function allows for a detailed and nuanced visualization of time-series data. It can integrate over
+matched indices to provide average values, or it can highlight exact matches. Options to add connecting lines
+or points enhance the visual representation of alignment.
 }
 \examples{
 data("object", package = "laggedcor")

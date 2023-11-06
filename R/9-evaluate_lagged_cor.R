@@ -1,11 +1,38 @@
-#' @title evaluate_lagged_cor
-#' @description evaluate_lagged_cor
-#' @author Xiaotao Shen
-#' \email{shenxt1990@@outlook.com}
-#' @param object a lagged_scatter_result class object.
-#' @param plot return plot or not.
+#' Evaluate Lagged Correlation and Fit Peaks
+#'
+#' This function takes a lagged correlation object, fits a loess curve to the correlation data,
+#' normalizes the data to ensure all correlations are on the same side of zero, fits peaks to the
+#' normalized correlation data, computes a score based on the Spearman correlation between the fitted
+#' peaks and the actual data, and optionally generates a plot.
+#'
+#' @param object An object of class `lagged_cor_result` which contains the fields `all_cor` for 
+#'        correlations and `shift_time` for the corresponding time shifts.
+#' @param plot Logical; if `TRUE`, generates a plot of the actual versus fitted correlation data.
+#'        Defaults to `TRUE`.
+#'
+#' @return A list containing the following components:
+#'         \itemize{
+#'           \item \code{score}: A numeric value representing the Spearman correlation score 
+#'                 of the fit, where higher values indicate a better fit.
+#'           \item \code{plot}: A ggplot object showing the actual versus fitted correlation data 
+#'                 if `plot` is `TRUE`, otherwise `NULL`.
+#'         }
+#'
+#' @details
+#' The function starts by checking if the input object is `NULL`. If it is, it returns a score
+#' of 0 and `NULL` for the plot. If the object is not `NULL`, the function proceeds to clean
+#' and prepare the shift times using `stringr` and `purrr`. Then, it fits a loess model to
+#' the correlation data and uses this to normalize the data and identify peaks using a custom
+#' `fitpeaks` function. It calculates the score of the fit using Spearman's method. The peak with
+#' the highest absolute correlation determines the score, and the function distinguishes between
+#' positive and negative correlations. The function uses `ggplot2` for plotting if required.
+#'
+#' @note
+#' This function depends on several external packages (`ggplot2`, `dplyr`, `stringr`, `purrr`) as
+#' well as a custom `fitpeaks` function that must be defined elsewhere in the user's environment.
+#'
 #' @export
-#' @return A ggplot2 object.
+#' 
 #' @examples 
 #' data("object", package = "laggedcor")
 #' result = 

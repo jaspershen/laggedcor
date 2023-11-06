@@ -1,14 +1,38 @@
-#' @title lagged_scatter_plot
-#' @description lagged_scatter_plot
+#' Lagged Scatter Plot
+#'
+#' This function creates a scatter plot of lagged time series data, 
+#' highlighting the correlation between two variables at different lags.
+#' The plot can be a regular scatter plot or a hexbin plot.
+#'
+#' @param object An S4 object containing time series data and associated information
+#'               such as global indices, maximum correlation indices, shift times,
+#'               and correlation values.
+#' @param x_name The name to be used for the x-axis label, defaults to "x".
+#' @param y_name The name to be used for the y-axis label, defaults to "y".
+#' @param which Determines the type of index to use for plotting, either "global" or "max".
+#'              "global" uses the global index and "max" uses the index of maximum correlation.
+#'              Defaults to c("global", "max").
+#' @param hex A logical value, if TRUE, a hexbin plot will be created, otherwise a regular 
+#'            scatter plot. Defaults to FALSE.
+#'
+#' @return A ggplot object representing the lagged scatter plot with appropriate annotations.
+#'
+#' @details The function calculates the average y-values at specific lags defined by the
+#'          index chosen (global or max). The scatter plot is then created using ggplot2 
+#'          and further annotated with correlation information. If `hex` is TRUE, the plot 
+#'          uses `stat_binhex` to create hexagonal binning. Otherwise, points are plotted 
+#'          directly with `geom_point`. A linear model fit is added in both cases using 
+#'          `geom_smooth`.
+#'
+#'
+#' @note The function expects the `object` to have specific slots: `@global_idx`, `@max_idx`, 
+#'       `@shift_time`, `@global_cor`, `@max_cor`, `@which_max_idx`, `@time1`, `@time2`, 
+#'       `@x`, and `@y`. If `hex` is TRUE, `@which_global_idx` is also used. It is important 
+#'       to ensure these slots are present in the object passed to the function. Also, 
+#'       the function assumes that `base_theme` is defined elsewhere in the user's environment.
 #' @author Xiaotao Shen
 #' \email{shenxt1990@@outlook.com}
-#' @param object a lagged_scatter_result class object.
-#' @param x_name x_name
-#' @param y_name y_name.
-#' @param which global and max
-#' @param hex TRUE or not
 #' @export
-#' @return A ggplot2 object.
 #' @examples 
 #' data("object", package = "laggedcor")
 #' lagged_scatter_plot(

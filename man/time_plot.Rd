@@ -2,7 +2,7 @@
 % Please edit documentation in R/15-time_plot.R
 \name{time_plot}
 \alias{time_plot}
-\title{time_plot}
+\title{Time Series Plot with Day/Night Shading}
 \usage{
 time_plot(
   x,
@@ -17,29 +17,40 @@ time_plot(
 )
 }
 \arguments{
-\item{x}{x}
+\item{x}{A numeric vector of values to plot.}
 
-\item{time}{time}
+\item{time}{A POSIXct or POSIXlt object representing the time points of the x values.}
 
-\item{color}{color}
+\item{color}{The color to be used for the lines and points in the plot, defaults to "blue".}
 
-\item{y_axis_name}{y_axis_name}
+\item{y_axis_name}{The label for the y-axis, defaults to "Value".}
 
-\item{sun_rise_time}{should be 24 hour format, default "6:00:00"}
+\item{sun_rise_time}{A character string representing sunrise time, defaults to "6:00:00".}
 
-\item{sun_set_time}{should be 24 hour format, default "18:00:00"}
+\item{sun_set_time}{A character string representing sunset time, defaults to "18:00:00".}
 
-\item{time_gap}{time_gap}
+\item{time_gap}{The gap in hours for the x-axis breaks, defaults to 12.}
 
-\item{add_point}{add_point}
+\item{add_point}{Logical, whether to add points to the line plot, defaults to FALSE.}
 
-\item{facet}{facet or not.}
+\item{facet}{Logical, whether to facet the plot by day, defaults to FALSE.}
 }
 \value{
-A ggplot2 object.
+A ggplot object that represents the time series plot.
 }
 \description{
-time_plot
+This function generates a time series plot using ggplot2 with shaded regions indicating day and night times.
+It can plot data points, allow for faceting by day, and adjust for time zones.
+}
+\details{
+This function utilizes the ggplot2, lubridate, and scales packages to create a time series plot.
+Day and night periods are shaded to distinguish between them visually. Optional faceting by day
+can be enabled to separate the plot into panels for each day. Additionally, data points can be
+added to the plot if desired.
+}
+\note{
+This function assumes that 'base_theme' is a ggplot2 theme object defined elsewhere in the user's environment.
+Adjust the 'sun_rise_time' and 'sun_set_time' to match the local times for sunrise and sunset.
 }
 \examples{
 data("step_data", package = "laggedcor")

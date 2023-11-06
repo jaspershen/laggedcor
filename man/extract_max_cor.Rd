@@ -2,24 +2,33 @@
 % Please edit documentation in R/10-extract_data.R
 \name{extract_max_cor}
 \alias{extract_max_cor}
-\title{extract_max_cor}
+\title{Extract Maximum Correlation Value}
 \usage{
 extract_max_cor(object)
 }
 \arguments{
-\item{object}{a lagged_scatter_result class object.}
+\item{object}{An object that includes \code{all_cor} and \code{shift_time} attributes.}
 }
 \value{
-A vector.
+A single named element. The name is the shift time associated with the maximum correlation
+value in the \code{all_cor} attribute of the object.
 }
 \description{
-extract_max_cor
+Retrieves the maximum correlation value from the \code{all_cor} attribute of the given object
+and provides the associated shift time as the name of the value.
+}
+\details{
+The function selects the maximum value from the \code{all_cor} attribute, which is a vector of correlation
+coefficients. It then matches this maximum value with its corresponding shift time from the
+\code{shift_time} attribute. This shift time becomes the name of the returned value, allowing for easy
+identification of when the maximum correlation occurs.
+}
+\note{
+The \code{object} is expected to have an \code{all_cor} attribute that contains correlation values and
+a \code{shift_time} attribute that contains the corresponding shift times. This function simplifies
+the process of identifying the point in time with the highest correlation coefficient.
 }
 \examples{
 data("object", package = "laggedcor")
 extract_max_cor(object = object)
-}
-\author{
-Xiaotao Shen
-\email{shenxt1990@outlook.com}
 }

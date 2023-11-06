@@ -2,24 +2,34 @@
 % Please edit documentation in R/10-extract_data.R
 \name{extract_all_cor_p}
 \alias{extract_all_cor_p}
-\title{extract_all_cor_p}
+\title{Extract All Correlation P-Values from an Object}
 \usage{
 extract_all_cor_p(object)
 }
 \arguments{
-\item{object}{a lagged_scatter_result class object.}
+\item{object}{An object that includes \code{all_cor_p} and \code{shift_time} attributes.}
 }
 \value{
-A vector.
+A named vector where each name is the corresponding shift time and each value is the
+p-value for the correlation coefficient associated with that shift time.
 }
 \description{
-extract_all_cor_p
+Retrieves all correlation p-values from a given object with a predefined structure,
+associating them with their respective shift times.
+}
+\details{
+The function accesses the \code{all_cor_p} component from the input object, which is expected to contain
+a series of p-values for correlation tests. It then retrieves the \code{shift_time} component from the same
+object and uses it to name the elements in the \code{all_cor_p} vector, effectively binding each
+p-value with its corresponding shift time. The resulting named vector is then
+returned.
+}
+\note{
+The \code{object} is presumed to have an accessible \code{all_cor_p} and \code{shift_time} attributes. This
+function is crucial for analyses where the significance of the correlation coefficients
+needs to be assessed in relation to their shift times.
 }
 \examples{
 data("object", package = "laggedcor")
 extract_all_cor_p(object = object)
-}
-\author{
-Xiaotao Shen
-\email{shenxt1990@outlook.com}
 }

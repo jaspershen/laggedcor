@@ -1,20 +1,34 @@
-#' @title calculate_lagged_correlation
-#' @description calculate_lagged_correlation
-#' @author Xiaotao Shen
-#' \email{shenxt1990@@outlook.com}
-#' @param x Time-series data 1. A numeric vector.
-#' @param y Time-series data 2. A numeric vector.
-#' @param time1 Time-series data 1. A time vector (POSIXct).
-#' @param time2 Time-series data 2. A time vector (POSIXct).
-#' @param time_tol Time tolerance to match time-series 1 and time-series data 2. Unit is hour.
-#' @param step Step to calculate lagged correlation.
-#' @param min_matched_sample Minimum matched sample numner for one lagged correlation.
-#' @param progressbar progressbar
-#' @param threads threads number
-#' @param cor_method spearman or pearson.
-#' @param all_idx all_idx
+#' Calculate Lagged Correlation Between Two Time Series
+#'
+#' This function calculates the lagged correlation between two time series data
+#' sets over specified time windows, with the capability to adjust for time tolerance,
+#' step size, and the minimum number of matched samples. The function also allows
+#' for the use of different correlation methods and parallel processing.
+#'
+#' @param x A numeric vector for the first time series.
+#' @param y A numeric vector for the second time series.
+#' @param time1 A numeric vector of timestamps corresponding to `x`. (POSIXct).
+#' @param time2 A numeric vector of timestamps corresponding to `y`. (POSIXct).
+#' @param time_tol Tolerance for the lag time, in hours (default is 1 hour).
+#' @param step The step size for the lag window, in hours (default is 1/60 hour, namely 1 min).
+#' @param min_matched_sample The minimum number of matched samples to consider
+#'   a valid correlation (default is 10).
+#' @param progressbar Logical indicating whether to show a progress bar (default is TRUE).
+#' @param all_idx An optional precomputed index list to speed up calculations.
+#' @param threads The number of threads to use for parallel processing (default is 10).
+#' @param cor_method The method for computing correlation: "spearman" or "pearson"
+#'   (default is "spearman").
+#'
+#' @return An object of class "lagged_cor_result" containing the lagged correlation
+#'   results, indices, and other relevant data.
+#'
+#' @details The function scales the input time series and computes correlations
+#'   over a range of time lags, handling mismatches in time series lengths by
+#'   a tolerance window. Parallel processing is implemented to improve performance
+#'   for large datasets.
+#'
 #' @export
-#' @return A lagged_cor class object.
+#' @author Xiaotao Shen \email{shenxt1990@stanford.edu}
 #' @examples
 #'\dontrun{
 #' data("heart_data", package = "laggedcor")
@@ -142,7 +156,8 @@ calculate_lagged_correlation <-
     all_cor_p =
       all_cor_result %>%
       purrr::map(function(x) {
-        if (class(all_cor_result[[1]]) != "htest") {
+        # if (class(all_cor_result[[1]]) != "htest") {
+        if (!is(all_cor_result[[1]], "htest")) {
           return(NA)
         } else{
           x$p.value
@@ -153,7 +168,8 @@ calculate_lagged_correlation <-
     all_cor =
       all_cor_result %>%
       purrr::map(function(x) {
-        if (class(all_cor_result[[1]]) != "htest") {
+        # if (class(all_cor_result[[1]]) != "htest") {
+        if (!is(all_cor_result[[1]], "htest")) {
           return(NA)
         } else{
           x$estimate

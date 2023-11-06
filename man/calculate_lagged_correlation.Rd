@@ -2,7 +2,7 @@
 % Please edit documentation in R/8-calculate_lagged_correlation.R
 \name{calculate_lagged_correlation}
 \alias{calculate_lagged_correlation}
-\title{calculate_lagged_correlation}
+\title{Calculate Lagged Correlation Between Two Time Series}
 \usage{
 calculate_lagged_correlation(
   x,
@@ -19,33 +19,45 @@ calculate_lagged_correlation(
 )
 }
 \arguments{
-\item{x}{Time-series data 1. A numeric vector.}
+\item{x}{A numeric vector for the first time series.}
 
-\item{y}{Time-series data 2. A numeric vector.}
+\item{y}{A numeric vector for the second time series.}
 
-\item{time1}{Time-series data 1. A time vector (POSIXct).}
+\item{time1}{A numeric vector of timestamps corresponding to \code{x}. (POSIXct).}
 
-\item{time2}{Time-series data 2. A time vector (POSIXct).}
+\item{time2}{A numeric vector of timestamps corresponding to \code{y}. (POSIXct).}
 
-\item{time_tol}{Time tolerance to match time-series 1 and time-series data 2. Unit is hour.}
+\item{time_tol}{Tolerance for the lag time, in hours (default is 1 hour).}
 
-\item{step}{Step to calculate lagged correlation.}
+\item{step}{The step size for the lag window, in hours (default is 1/60 hour, namely 1 min).}
 
-\item{min_matched_sample}{Minimum matched sample numner for one lagged correlation.}
+\item{min_matched_sample}{The minimum number of matched samples to consider
+a valid correlation (default is 10).}
 
-\item{progressbar}{progressbar}
+\item{progressbar}{Logical indicating whether to show a progress bar (default is TRUE).}
 
-\item{all_idx}{all_idx}
+\item{all_idx}{An optional precomputed index list to speed up calculations.}
 
-\item{threads}{threads number}
+\item{threads}{The number of threads to use for parallel processing (default is 10).}
 
-\item{cor_method}{spearman or pearson.}
+\item{cor_method}{The method for computing correlation: "spearman" or "pearson"
+(default is "spearman").}
 }
 \value{
-A lagged_cor class object.
+An object of class "lagged_cor_result" containing the lagged correlation
+results, indices, and other relevant data.
 }
 \description{
-calculate_lagged_correlation
+This function calculates the lagged correlation between two time series data
+sets over specified time windows, with the capability to adjust for time tolerance,
+step size, and the minimum number of matched samples. The function also allows
+for the use of different correlation methods and parallel processing.
+}
+\details{
+The function scales the input time series and computes correlations
+over a range of time lags, handling mismatches in time series lengths by
+a tolerance window. Parallel processing is implemented to improve performance
+for large datasets.
 }
 \examples{
 \dontrun{
@@ -78,6 +90,5 @@ object
 }
 }
 \author{
-Xiaotao Shen
-\email{shenxt1990@outlook.com}
+Xiaotao Shen \email{shenxt1990@stanford.edu}
 }

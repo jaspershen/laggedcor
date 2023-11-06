@@ -2,7 +2,7 @@
 % Please edit documentation in R/13-lagged_scatter_plot.R
 \name{lagged_scatter_plot}
 \alias{lagged_scatter_plot}
-\title{lagged_scatter_plot}
+\title{Lagged Scatter Plot}
 \usage{
 lagged_scatter_plot(
   object,
@@ -13,21 +13,43 @@ lagged_scatter_plot(
 )
 }
 \arguments{
-\item{object}{a lagged_scatter_result class object.}
+\item{object}{An S4 object containing time series data and associated information
+such as global indices, maximum correlation indices, shift times,
+and correlation values.}
 
-\item{x_name}{x_name}
+\item{x_name}{The name to be used for the x-axis label, defaults to "x".}
 
-\item{y_name}{y_name.}
+\item{y_name}{The name to be used for the y-axis label, defaults to "y".}
 
-\item{which}{global and max}
+\item{which}{Determines the type of index to use for plotting, either "global" or "max".
+"global" uses the global index and "max" uses the index of maximum correlation.
+Defaults to c("global", "max").}
 
-\item{hex}{TRUE or not}
+\item{hex}{A logical value, if TRUE, a hexbin plot will be created, otherwise a regular
+scatter plot. Defaults to FALSE.}
 }
 \value{
-A ggplot2 object.
+A ggplot object representing the lagged scatter plot with appropriate annotations.
 }
 \description{
-lagged_scatter_plot
+This function creates a scatter plot of lagged time series data,
+highlighting the correlation between two variables at different lags.
+The plot can be a regular scatter plot or a hexbin plot.
+}
+\details{
+The function calculates the average y-values at specific lags defined by the
+index chosen (global or max). The scatter plot is then created using ggplot2
+and further annotated with correlation information. If \code{hex} is TRUE, the plot
+uses \code{stat_binhex} to create hexagonal binning. Otherwise, points are plotted
+directly with \code{geom_point}. A linear model fit is added in both cases using
+\code{geom_smooth}.
+}
+\note{
+The function expects the \code{object} to have specific slots: \verb{@global_idx}, \verb{@max_idx},
+\verb{@shift_time}, \verb{@global_cor}, \verb{@max_cor}, \verb{@which_max_idx}, \verb{@time1}, \verb{@time2},
+\verb{@x}, and \verb{@y}. If \code{hex} is TRUE, \verb{@which_global_idx} is also used. It is important
+to ensure these slots are present in the object passed to the function. Also,
+the function assumes that \code{base_theme} is defined elsewhere in the user's environment.
 }
 \examples{
 data("object", package = "laggedcor")

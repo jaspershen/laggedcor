@@ -1,23 +1,33 @@
-#' @title lagged_alignment_plot
-#' @description lagged_alignment_plot
+#' Lagged Alignment Plot
+#'
+#' Generates a plot to visualize the alignment of two time-series data sets at specified lag times.
+#' The function allows for customization of colors, names, point sizes, and various other plotting options.
+#'
+#' @param object An object that includes time series and index attributes required for plotting.
+#' @param x_color Color for the x series in the plot.
+#' @param y_color Color for the y series in the plot.
+#' @param x_name Label for the x series.
+#' @param y_name Label for the y series.
+#' @param which Specifies which index to use for alignment ('global' or 'max').
+#' @param x_limit A numeric vector specifying the x-axis limits.
+#' @param non_matched_point_size Size of the points for non-matched elements in the plot.
+#' @param y_point_size Size of the points for y series in the plot.
+#' @param x_point_size Size of the points for x series in the plot.
+#' @param integrated Logical, if TRUE the plot will integrate over the index to create average values.
+#' @param add_connect_line Logical, if TRUE connection lines will be added to the plot.
+#' @param add_point Logical, if TRUE points will be added to the plot.
+#' @param time_gap The gap of time between breaks in the x-axis.
+#'
+#' @return A ggplot object representing the lagged alignment plot.
+#'
+#' @details
+#' The function allows for a detailed and nuanced visualization of time-series data. It can integrate over
+#' matched indices to provide average values, or it can highlight exact matches. Options to add connecting lines
+#' or points enhance the visual representation of alignment.
+#'
+#' @export
 #' @author Xiaotao Shen
 #' \email{shenxt1990@@outlook.com}
-#' @param object a lagged_scatter_result class object.
-#' @param x_color x_color
-#' @param y_color y_color
-#' @param x_name x_name
-#' @param y_name y_name
-#' @param which global or maz
-#' @param x_limit x_limit
-#' @param non_matched_point_size non_matched_point_size
-#' @param y_point_size y_point_size
-#' @param x_point_size x_point_size
-#' @param integrated integrated
-#' @param add_connect_line add_connect_line
-#' @param add_point add_point
-#' @param time_gap time_gap in x axis.
-#' @export
-#' @return A ggplot2 object.
 #' @examples
 #' data("object", package = "laggedcor")
 #'
@@ -80,13 +90,9 @@ lagged_alignment_plot =
     x = object@x
     y = object@y
     
-    # if (x_limit[2] > length(x)) {
-    #   x_limit[2] = length(x)
+    # if (max(x) > min(y)) {
+    #   x = x - (max(x) - min(y))
     # }
-    
-    if (max(x) > min(y)) {
-      x = x - (max(x) - min(y))
-    }
     
     #######non integrated
     if (integrated) {
@@ -109,10 +115,10 @@ lagged_alignment_plot =
       
       x2 = data.frame(time = time1,
                       value = x,
-                      class = "x")
+                      class = x_name)
       y2 = data.frame(time = time2,
                       value = y,
-                      class = "y")
+                      class = y_name)
       
       x2$matched = 'NO'
       x2$matched[which(unlist(lapply(idx, length)) > 0)] =  "YES"
@@ -133,10 +139,10 @@ lagged_alignment_plot =
     } else{
       x2 = data.frame(time = time1,
                       value = x,
-                      class = "x")
+                      class = x_name)
       y2 = data.frame(time = time2,
                       value = y,
-                      class = "y")
+                      class = y_name)
       
       x2$matched = 'NO'
       x2$matched[which(unlist(lapply(idx, length)) > 0)] =  "YES"
@@ -153,12 +159,17 @@ lagged_alignment_plot =
                                   matched == "NO" ~ "NO"))
     }
     
+    if (x_limit[2] > length(unique(value$time))) {
+      x_limit[2] = length(unique(value$time))
+    }
+    
     time1 = sort(unique(value$time))[x_limit[1]]
     time2 = sort(unique(value$time))[x_limit[2]]
     
     value =
       value %>%
-      dplyr::filter(time >= time1 & time < time2)
+      dplyr::filter(time >= time1 & time < time2) %>% 
+      dplyr::mutate(class = factor(class, levels = c(x_name, y_name)))
     
     sun_rise =
       lubridate::ymd_hms(paste(unique(lubridate::date(value$time)), c("6:00:00")),
@@ -193,14 +204,31 @@ lagged_alignment_plot =
           group = class,
           color = class
         ),
-        show.legend = TRUE
-      )
+        show.legend = FALSE
+      ) +
+      facet_grid(rows = vars(class), scales = "free_y")
+    
+    size_list <-
+      c(x_point_size,
+        y_point_size,
+        non_matched_point_size)
+    
+    names(size_list) <-
+      c(x_name, y_name,
+        "NO")
+    
+    color_list <-
+      c(unname(x_color),
+        unname(y_color),
+        "grey")
+    
+    names(color_list) <-
+      c(x_name, y_name,
+        "NO")
     
     plot =
       plot +
-      scale_size_manual(values = c("x" = x_point_size,
-                                   "y" = y_point_size,
-                                   "NO" = non_matched_point_size)) +
+      scale_size_manual(values = size_list) +
       scale_x_datetime(
         breaks = scales::date_breaks(paste(time_gap, "hour")),
         date_labels = "%a %H:%M",
@@ -223,14 +251,7 @@ lagged_alignment_plot =
                                   override.aes = list(size = 3)),
              size = "none") +
       scale_color_manual(
-        values = c(
-          "x" = unname(x_color),
-          "y" = unname(y_color),
-          'NO' = "grey"
-        ),
-        labels = c("x" = x_name,
-                   "y" = y_name,
-                   "NO" = "Non matched")
+        values = color_list
       )
     
     if (add_point) {
@@ -285,8 +306,6 @@ lagged_alignment_plot =
       base_theme +
       theme(
         legend.position = "top",
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
         axis.text.x = element_text(
           angle = 45,
           vjust = 1,

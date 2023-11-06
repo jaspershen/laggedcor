@@ -2,27 +2,40 @@
 % Please edit documentation in R/10-extract_data.R
 \name{extract_shift_time}
 \alias{extract_shift_time}
-\title{extract_shift_time}
+\title{Extract Shift Time from a Lagged Correlation Object}
 \usage{
 extract_shift_time(object, numeric = TRUE)
 }
 \arguments{
-\item{object}{a lagged_scatter_result class object.}
+\item{object}{An object that includes a \code{shift_time} component, expected to be in a specific
+format (string or numeric).}
 
-\item{numeric}{shift time as numeric or character}
+\item{numeric}{A logical value; if \code{TRUE}, the function will convert \code{shift_time} values into
+numeric means, otherwise, it will return raw shift times. Defaults to \code{TRUE}.}
 }
 \value{
-A vector.
+If \code{numeric} is TRUE, returns a numeric vector of the mean shift times extracted from
+the object's \code{shift_time} attribute. If \code{numeric} is FALSE, returns the raw shift time
+values as they are stored in the object.
 }
 \description{
-extract_shift_time
+Retrieves the shift time(s) from a lagged correlation object, with an option to process and
+return them as numeric values.
+}
+\details{
+The function first retrieves the \code{shift_time} component of the input object. If the \code{numeric}
+parameter is set to \code{TRUE}, the function proceeds to convert the shift time(s) to numeric
+format. It removes parentheses, splits the string at commas, takes the first element, converts
+it to numeric and calculates the mean if there are multiple values. This is all done using
+a chain of \code{lapply} and \code{stringr} functions. If \code{numeric} is FALSE, the raw shift time data is
+returned as is.
+}
+\note{
+The \code{object} is expected to have an accessible \code{shift_time} attribute. The function relies on
+the \code{stringr} package for string manipulation.
 }
 \examples{
 data("object", package = "laggedcor")
 extract_shift_time(object = object, numeric = TRUE)
 extract_shift_time(object = object, numeric = FALSE)
-}
-\author{
-Xiaotao Shen
-\email{shenxt1990@outlook.com}
 }

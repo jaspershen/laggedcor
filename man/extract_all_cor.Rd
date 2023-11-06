@@ -2,18 +2,32 @@
 % Please edit documentation in R/10-extract_data.R
 \name{extract_all_cor}
 \alias{extract_all_cor}
-\title{extract_all_cor}
+\title{Extract All Correlations from an Object}
 \usage{
 extract_all_cor(object)
 }
 \arguments{
-\item{object}{a lagged_scatter_result class object.}
+\item{object}{An object that includes \code{all_cor} and \code{shift_time} attributes.}
 }
 \value{
-A vector.
+A named vector where each name is the corresponding shift time and each value is the
+correlation coefficient associated with that shift time.
 }
 \description{
-extract_all_cor
+Retrieves all correlation coefficients from a given object with predefined structure,
+associating them with their respective shift times.
+}
+\details{
+The function accesses the \code{all_cor} component from the input object, which is expected to contain
+a series of correlation coefficients. It then retrieves the \code{shift_time} component from the same
+object and uses it to name the elements in the \code{all_cor} vector, effectively binding each
+correlation coefficient with its respective shift time. The resulting named vector is then
+returned.
+}
+\note{
+The \code{object} is assumed to have an accessible \code{all_cor} and \code{shift_time} attributes. This
+function is useful for subsequent analysis where the relationship between correlation
+coefficients and their corresponding shift times is needed.
 }
 \examples{
 data("object", package = "laggedcor")
