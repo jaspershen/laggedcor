@@ -30,20 +30,20 @@
 #' @export
 #' @author Xiaotao Shen \email{shenxt1990@stanford.edu}
 #' @examples
-#'\dontrun{
+#' \dontrun{
 #' data("heart_data", package = "laggedcor")
 #' data("step_data", package = "laggedcor")
 #'
 #' dim(heart_data)
 #' dim(step_data)
 #'
-#' x = step_data$step
-#' time1 = step_data$time
+#' x <- step_data$step
+#' time1 <- step_data$time
 #'
-#' y = heart_data$heart
-#' time2 = heart_data$time
+#' y <- heart_data$heart
+#' time2 <- heart_data$time
 #'
-#' object =
+#' object <-
 #'   calculate_lagged_correlation(
 #'     x = x,
 #'     y = y,
@@ -58,7 +58,6 @@
 #'   )
 #' object
 #' }
-
 calculate_lagged_correlation <-
   function(x,
            y,
@@ -70,83 +69,141 @@ calculate_lagged_correlation <-
            progressbar = TRUE,
            all_idx = NULL,
            threads = 10,
+           p_threshold = 0.05,
            cor_method = c("spearman", "pearson")) {
-    cor_method = match.arg(cor_method)
-    if (length(x) == 0 | length(y) == 0) {
+    cor_method <- match.arg(cor_method)
+    if (length(x) == 0 || length(y) == 0) {
       return(NULL)
     }
-    ##time_tol unit is hour
-    ##step unit is hour
-    x = as.numeric(x) %>%
+    ## time_tol unit is hour
+    ## step unit is hour
+
+    # rescale the input data to the same scale
+    x <- as.numeric(x) %>%
       scale() %>%
       as.numeric()
-    
-    y = as.numeric(y) %>%
+
+    y <- as.numeric(y) %>%
       scale() %>%
       as.numeric()
-    
-    time_window1 =
+
+    x_smooth <- x %>% arrange(time1) %>% function(step) {
+      ifelse(
+        step > 0, predict(loess(step ~ as.numeric(time1), span = 0.2)),
+      )
+    }
+
+    findpeaks <- function(x) {
+      peak_idx <- which(diff(sign(diff(x))) == -2) + 1
+      return(peak_idx)
+    }
+
+    x_peaks <- findpeaks(x_smooth)
+
+    x_first_peak <- x_peaks[1]
+
+    y_smooth <- y %>% arrange(time2) %>% function(step) {
+      ifelse(
+        step > 0, predict(loess(step ~ as.numeric(time2), span = 0.2)),
+      )
+    }
+
+    y_peaks <- findpeaks(y_smooth)
+
+    y_first_peak <- y_peaks[1]
+
+    tentative_shift <- x_first_peak - y_first_peak
+
+    time_window1 <-
       seq(from = step / 2, to = time_tol, by = step)
-    
-    time_window2 =
+
+    time_window2 <-
       -rev(seq(from = step / 2, to = time_tol, by = step))
-    
-    time_window = sort(c(time_window2, time_window1))
-    
-    temp_fun =
-      function(temp_idx,
-               time_window,
-               x,
-               y,
-               time1,
-               time2) {
-        idx =
-          time1 %>%
-          purrr::map(function(temp_time1) {
-            # cat(match(temp_time1, time1), " ")
-            diff_time =
-              difftime(temp_time1, time2, units = "hours")
-            which(diff_time > time_window[temp_idx] &
-                    diff_time <= time_window[temp_idx + 1])
-          })
-      }
-    
+
+    time_window <- sort(c(time_window2, time_window1))
+
+    # temp_fun <-
+    #   function(temp_idx,
+    #            time_window,
+    #            x,
+    #            y,
+    #            time1,
+    #            time2) {
+    #     idx <-
+    #       time1 %>%
+    #       purrr::map(function(temp_time1) {
+    #         # cat(match(temp_time1, time1), " ")
+    #         diff_time <-
+    #           difftime(temp_time1, time2, units = "hours")
+    #         which(diff_time > time_window[temp_idx] &
+    #           diff_time <= time_window[temp_idx + 1])
+    #       })
+    #   }
+
     if (get_os() == "windows") {
-      bpparam = BiocParallel::SnowParam(workers = threads,
-                                        progressbar = TRUE)
-    } else{
-      bpparam = BiocParallel::MulticoreParam(workers = threads,
-                                             progressbar = TRUE)
+      bpparam <- BiocParallel::SnowParam(
+        workers = threads,
+        # progressbar = TRUE
+      )
+    } else {
+      bpparam <- BiocParallel::MulticoreParam(
+        workers = threads,
+        force.GC = FALSE,
+        # progressbar = TRUE
+      )
     }
-    
-    old_all_idx = all_idx
-    
+
+    old_all_idx <- all_idx
+
+    # if (is.null(all_idx)) {
+    #   all_idx <-
+    #     BiocParallel::bplapply(
+    #       X = seq_along(time_window)[-length(time_window)],
+    #       FUN = temp_fun,
+    #       time_window = time_window,
+    #       x = x,
+    #       y = y,
+    #       time1 = time1,
+    #       time2 = time2,
+    #       BPPARAM = bpparam
+    #     )
+    # }
+
     if (is.null(all_idx)) {
-      all_idx =
-        BiocParallel::bplapply(
-          X = seq_along(time_window)[-length(time_window)],
-          FUN = temp_fun,
-          time_window = time_window,
-          x = x,
-          y = y,
-          time1 = time1,
-          time2 = time2,
-          BPPARAM = bpparam
+      all_idx <- BiocParallel::bplapply(
+        X = seq_along(time_window)[-length(time_window)],
+        FUN = function(temp_idx) {
+          idx <- BiocParallel::bplapply(
+            X = time1,
+            FUN = function(temp_time1) {
+              diff_time <-
+                difftime(temp_time1, time2, units = "hours")
+              which(diff_time > time_window[temp_idx] &
+                diff_time <= time_window[temp_idx + 1])
+            },
+            BPPARAM = bpparam
+          )
+
+          return(idx) # explicit return
+        },
+        BPPARAM = BiocParallel::SerialParam(
+          progressbar = TRUE
         )
+      )
     }
-    
-    all_cor_result =
+
+    all_cor_result <-
       purrr::map(all_idx, function(idx) {
-        temp_y =
+        temp_y <-
           lapply(idx, function(x) {
             mean(y[x])
           }) %>%
           unlist()
-        temp_x = x[which(!is.na(temp_y))]
-        temp_y = temp_y[which(!is.na(temp_y))]
+        temp_x <- x[which(!is.na(temp_y))]
+        temp_y <- temp_y[which(!is.na(temp_y))]
         if (length(temp_x) < min_matched_sample) {
           return(NA)
-        } else{
+        } else {
           tryCatch(
             expr = cor.test(temp_x, temp_y, method = cor_method),
             error = function(na) {
@@ -155,46 +212,50 @@ calculate_lagged_correlation <-
           )
         }
       })
-    
-    all_cor_p =
+
+    all_cor_p <-
       all_cor_result %>%
       purrr::map(function(x) {
         # if (class(all_cor_result[[1]]) != "htest") {
         if (!is(all_cor_result[[1]], "htest")) {
           return(NA)
-        } else{
+        } else {
           x$p.value
         }
       }) %>%
       unlist()
-    
-    all_cor =
+
+    all_cor <-
       all_cor_result %>%
       purrr::map(function(x) {
         # if (class(all_cor_result[[1]]) != "htest") {
         if (!is(all_cor_result[[1]], "htest")) {
           return(NA)
-        } else{
+        } else {
           x$estimate
         }
       }) %>%
       unlist() %>%
       unname()
-    
-    which_max_idx =
+
+    which_max_idx <-
       which.max(abs(all_cor))
-    
-    max_idx = all_idx[[which_max_idx]]
-    
-    shift_time =
+
+    max_idx <- all_idx[[which_max_idx]]
+
+    shift_time <-
       paste("(",
-            paste(round(time_window[-length(time_window)] * 60, 2),
-                  round(time_window[-1] * 60, 2), sep = ','),
-            "]", sep = "")
-    
-    which_global_idx =
+        paste(round(time_window[-length(time_window)] * 60, 2),
+          round(time_window[-1] * 60, 2),
+          sep = ","
+        ),
+        "]",
+        sep = ""
+      )
+
+    which_global_idx <-
       purrr::map(shift_time, function(x) {
-        x =
+        x <-
           stringr::str_replace(x, "\\(", "") %>%
           stringr::str_replace("\\]", "") %>%
           stringr::str_split(",") %>%
@@ -204,13 +265,13 @@ calculate_lagged_correlation <-
       }) %>%
       unlist() %>%
       which()
-    
-    global_idx = all_idx[[which_global_idx]]
-    
-    global_cor = all_cor[which_global_idx]
-    global_cor_p = all_cor_p[which_global_idx]
-    
-    parameter =
+
+    global_idx <- all_idx[[which_global_idx]]
+
+    global_cor <- all_cor[which_global_idx]
+    global_cor_p <- all_cor_p[which_global_idx]
+
+    parameter <-
       new(
         Class = "tidymass_parameter",
         pacakge_name = "laggedcor",
@@ -221,11 +282,12 @@ calculate_lagged_correlation <-
           min_matched_sample = min_matched_sample,
           progressbar = progressbar,
           threads = threads,
+          p_threshold = p_threshold,
           cor_method = cor_method
         ),
         time = Sys.time()
       )
-    
+
     object <- new(
       Class = "lagged_cor_result",
       x = x,
@@ -244,7 +306,6 @@ calculate_lagged_correlation <-
       global_cor = global_cor,
       parameter = parameter
     )
-    
+
     return(object)
-    
   }

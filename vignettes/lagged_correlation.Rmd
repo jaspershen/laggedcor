@@ -49,6 +49,10 @@ data("heart_data", package = "laggedcor")
 head(step_data)
 head(heart_data)
 ```
+
+```{r}
+library(profvis)
+```
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
 time_plot(x = step_data$step, time = step_data$time)
 ```
@@ -77,16 +81,22 @@ time2 = heart_data$time
 
 
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
-result = 
-  calculate_lagged_correlation(x = x, 
-                               y = y,
-                               time1 = time1, 
-                               time2 = time2, 
-                               time_tol = 0.2, 
-                               step = 2 / 60, 
-                               min_matched_sample = 10, 
-                               threads = 5, 
-                               cor_method = "spearman")
+start_time <- Sys.time()
+profvis({
+  result <-
+    calculate_lagged_correlation(
+      x = x,
+      y = y,
+      time1 = time1,
+      time2 = time2,
+      time_tol = 0.2,
+      step = 2 / 60,
+      min_matched_sample = 10,
+      threads = 16,
+      cor_method = "spearman")
+})
+end_time <- Sys.time()
+end_time - start_time
 ```
 
 The parameters of `calculate_lagged_correlation`;
@@ -114,6 +124,10 @@ The parameters of `calculate_lagged_correlation`;
 
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
 result
+```
+
+```{r}
+saveRDS(result, "lagged_correlation_result.rds")
 ```
 
 We can see that the index of max correlation is 11 and index of global correlation is 12, means that the max correlation is achieved from a shifted time.
