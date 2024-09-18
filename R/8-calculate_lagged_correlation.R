@@ -49,11 +49,11 @@
 #'     y = y,
 #'     time1 = time1,
 #'     time2 = time2,
-#'     time_tol = 0.1,
-#'     step = 1 / 60,
+#'     time_tol = 0.2,
+#'     step = 2 / 60,
 #'     min_matched_sample = 10,
 #'     progressbar = TRUE,
-#'     threads = 5,
+#'     threads = 16,
 #'     cor_method = "spearman"
 #'   )
 #' object
@@ -87,32 +87,26 @@ calculate_lagged_correlation <-
       scale() %>%
       as.numeric()
 
-    x_smooth <- x %>% arrange(time1) %>% function(step) {
-      ifelse(
-        step > 0, predict(loess(step ~ as.numeric(time1), span = 0.2)),
-      )
-    }
-
     findpeaks <- function(x) {
       peak_idx <- which(diff(sign(diff(x))) == -2) + 1
       return(peak_idx)
     }
 
-    x_peaks <- findpeaks(x_smooth)
-
-    x_first_peak <- x_peaks[1]
-
-    y_smooth <- y %>% arrange(time2) %>% function(step) {
-      ifelse(
-        step > 0, predict(loess(step ~ as.numeric(time2), span = 0.2)),
-      )
-    }
-
-    y_peaks <- findpeaks(y_smooth)
-
-    y_first_peak <- y_peaks[1]
-
-    tentative_shift <- x_first_peak - y_first_peak
+    # x_peaks <- findpeaks(x_smooth)
+    #
+    # x_first_peak <- x_peaks[1]
+    #
+    # y_smooth <- y %>% arrange(time2) %>% function(step) {
+    #   ifelse(
+    #     step > 0, predict(loess(step ~ as.numeric(time2), span = 0.2)),
+    #   )
+    # }
+    #
+    # y_peaks <- findpeaks(y_smooth)
+    #
+    # y_first_peak <- y_peaks[1]
+    #
+    # tentative_shift <- x_first_peak - y_first_peak
 
     time_window1 <-
       seq(from = step / 2, to = time_tol, by = step)
@@ -143,31 +137,15 @@ calculate_lagged_correlation <-
     if (get_os() == "windows") {
       bpparam <- BiocParallel::SnowParam(
         workers = threads,
-        # progressbar = TRUE
       )
     } else {
       bpparam <- BiocParallel::MulticoreParam(
         workers = threads,
-        force.GC = FALSE,
-        # progressbar = TRUE
+        force.GC = FALSE, # Ref: https://support.bioconductor.org/p/9140528/
       )
     }
 
     old_all_idx <- all_idx
-
-    # if (is.null(all_idx)) {
-    #   all_idx <-
-    #     BiocParallel::bplapply(
-    #       X = seq_along(time_window)[-length(time_window)],
-    #       FUN = temp_fun,
-    #       time_window = time_window,
-    #       x = x,
-    #       y = y,
-    #       time1 = time1,
-    #       time2 = time2,
-    #       BPPARAM = bpparam
-    #     )
-    # }
 
     if (is.null(all_idx)) {
       all_idx <- BiocParallel::bplapply(
@@ -183,7 +161,6 @@ calculate_lagged_correlation <-
             },
             BPPARAM = bpparam
           )
-
           return(idx) # explicit return
         },
         BPPARAM = BiocParallel::SerialParam(
