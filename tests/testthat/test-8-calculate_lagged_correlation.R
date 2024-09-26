@@ -31,6 +31,7 @@ test_that("calculate_lagged_correlation_works", {
   max_cor <- extract_max_cor(object = result)
   global_cor <- extract_global_cor(object = result)
 
+  # TODO: make the test for values better
   expect_equal(max_cor, extract_max_cor(object = expected_res))
   expect_equal(global_cor, extract_global_cor(object = expected_res))
 })
