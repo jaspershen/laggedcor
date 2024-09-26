@@ -135,14 +135,11 @@ calculate_lagged_correlation <-
     #   }
 
     if (get_os() == "windows") {
-      bpparam <- BiocParallel::SnowParam(
-        workers = threads,
-      )
+      bpparam <- BiocParallel::SnowParam(workers = threads)
     } else {
-      bpparam <- BiocParallel::MulticoreParam(
-        workers = threads,
-        force.GC = FALSE, # Ref: https://support.bioconductor.org/p/9140528/
-      )
+      # Ref: https://support.bioconductor.org/p/9140528/
+      bpparam <- BiocParallel::MulticoreParam(workers = threads,
+                                              force.GC = FALSE)
     }
 
     old_all_idx <- all_idx
@@ -157,15 +154,13 @@ calculate_lagged_correlation <-
               diff_time <-
                 difftime(temp_time1, time2, units = "hours")
               which(diff_time > time_window[temp_idx] &
-                diff_time <= time_window[temp_idx + 1])
+                      diff_time <= time_window[temp_idx + 1])
             },
             BPPARAM = bpparam
           )
           return(idx) # explicit return
         },
-        BPPARAM = BiocParallel::SerialParam(
-          progressbar = TRUE
-        )
+        BPPARAM = BiocParallel::SerialParam(progressbar = TRUE)
       )
     }
 
@@ -221,14 +216,7 @@ calculate_lagged_correlation <-
     max_idx <- all_idx[[which_max_idx]]
 
     shift_time <-
-      paste("(",
-        paste(round(time_window[-length(time_window)] * 60, 2),
-          round(time_window[-1] * 60, 2),
-          sep = ","
-        ),
-        "]",
-        sep = ""
-      )
+      paste("(", paste(round(time_window[-length(time_window)] * 60, 2), round(time_window[-1] * 60, 2), sep = ","), "]", sep = "")
 
     which_global_idx <-
       purrr::map(shift_time, function(x) {

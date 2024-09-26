@@ -31,11 +31,11 @@ knitr::opts_chunk$set(
 
 `laggedcor` needs two time-series data and their corresponding time.
 
-* x: time-series 1. numeric vector. 
+* x: time-series 1. numeric vector.
 
-* y: time-series 2. numeric vector. 
+* y: time-series 2. numeric vector.
 
-* time1: time for x. 
+* time1: time for x.
 
 * time2: time for y.
 
@@ -50,9 +50,6 @@ head(step_data)
 head(heart_data)
 ```
 
-```{r}
-library(profvis)
-```
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
 time_plot(x = step_data$step, time = step_data$time)
 ```
@@ -69,6 +66,7 @@ Then we calculate the lagged correlations between step and heart rate.
 dim(step_data)
 dim(heart_data)
 ```
+
 The time-series data with less number of time point should be set as `x`.
 
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}

@@ -42,7 +42,8 @@ Imports:
     methods,
     stats,
     utils,
-    hms
+    hms,
+    zoo
 Suggests: 
     knitr,
     rmarkdown

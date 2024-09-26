@@ -15,6 +15,7 @@ calculate_lagged_correlation(
   progressbar = TRUE,
   all_idx = NULL,
   threads = 10,
+  p_threshold = 0.05,
   cor_method = c("spearman", "pearson")
 )
 }
@@ -67,23 +68,23 @@ data("step_data", package = "laggedcor")
 dim(heart_data)
 dim(step_data)
 
-x = step_data$step
-time1 = step_data$time
+x <- step_data$step
+time1 <- step_data$time
 
-y = heart_data$heart
-time2 = heart_data$time
+y <- heart_data$heart
+time2 <- heart_data$time
 
-object =
+object <-
   calculate_lagged_correlation(
     x = x,
     y = y,
     time1 = time1,
     time2 = time2,
-    time_tol = 0.1,
-    step = 1 / 60,
+    time_tol = 0.2,
+    step = 2 / 60,
     min_matched_sample = 10,
     progressbar = TRUE,
-    threads = 5,
+    threads = 16,
     cor_method = "spearman"
   )
 object

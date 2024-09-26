@@ -15,7 +15,7 @@ load("~/Desktop/multi-omics/data_smooth/data/step_data.rda")
 load("~/Desktop/multi-omics/data_smooth/data/heart_data.rda") 
 
 #对时间序列进行对齐，使用平均值对心率数据进行插值
-aligned_data <- step_data %>%
+aligned_data <- step_data %>% 
   left_join(heart_data, by = "time") %>%
   tidyr::fill(heart, .direction = "downup")  #最近邻插值法
 
