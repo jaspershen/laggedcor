@@ -80,19 +80,20 @@ time2 = heart_data$time
 
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
 start_time <- Sys.time()
-profvis({
-  result <-
-    calculate_lagged_correlation(
-      x = x,
-      y = y,
-      time1 = time1,
-      time2 = time2,
-      time_tol = 0.2,
-      step = 2 / 60,
-      min_matched_sample = 10,
-      threads = 16,
-      cor_method = "spearman")
-})
+
+result <-
+  calculate_lagged_correlation(
+    x = x,
+    y = y,
+    time1 = time1,
+    time2 = time2,
+    time_tol = 0.2,
+    step = 2 / 60,
+    min_matched_sample = 10,
+    threads = 16,
+    cor_method = "spearman"
+  )
+
 end_time <- Sys.time()
 end_time - start_time
 ```

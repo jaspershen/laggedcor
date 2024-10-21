@@ -144,6 +144,7 @@ fitpeaks <- function(y, pos) {
 
 
 
+
 get_os <- function() {
   sysinf <- Sys.info()
   if (!is.null(sysinf)) {

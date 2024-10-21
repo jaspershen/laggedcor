@@ -43,7 +43,8 @@ Imports:
     stats,
     utils,
     hms,
-    zoo
+    zoo,
+    pracma,
 Suggests: 
     knitr,
     rmarkdown

@@ -1,99 +1,84 @@
-#' Calculate Lagged Correlation Between Two Time Series
-#'
-#' This function calculates the lagged correlation between two time series data
-#' sets over specified time windows, with the capability to adjust for time tolerance,
-#' step size, and the minimum number of matched samples. The function also allows
-#' for the use of different correlation methods and parallel processing.
-#'
-#' @param x A numeric vector for the first time series.
-#' @param y A numeric vector for the second time series.
-#' @param time1 A numeric vector of timestamps corresponding to `x`. (POSIXct).
-#' @param time2 A numeric vector of timestamps corresponding to `y`. (POSIXct).
-#' @param time_tol Tolerance for the lag time, in hours (default is 1 hour).
-#' @param step The step size for the lag window, in hours (default is 1/60 hour, namely 1 min).
-#' @param min_matched_sample The minimum number of matched samples to consider
-#'   a valid correlation (default is 10).
-#' @param progressbar Logical indicating whether to show a progress bar (default is TRUE).
-#' @param all_idx An optional precomputed index list to speed up calculations.
-#' @param threads The number of threads to use for parallel processing (default is 10).
-#' @param cor_method The method for computing correlation: "spearman" or "pearson"
-#'   (default is "spearman").
-#'
-#' @return An object of class "lagged_cor_result" containing the lagged correlation
-#'   results, indices, and other relevant data.
-#'
-#' @details The function scales the input time series and computes correlations
-#'   over a range of time lags, handling mismatches in time series lengths by
-#'   a tolerance window. Parallel processing is implemented to improve performance
-#'   for large datasets.
-#'
-#' @export
-#' @author Xiaotao Shen \email{shenxt1990@stanford.edu}
-#' @examples
-#' \dontrun{
-#' data("heart_data", package = "laggedcor")
-#' data("step_data", package = "laggedcor")
-#'
-#' dim(heart_data)
-#' dim(step_data)
-#'
-#' x <- step_data$step
-#' time1 <- step_data$time
-#'
-#' y <- heart_data$heart
-#' time2 <- heart_data$time
-#'
-#' object <-
-#'   calculate_lagged_correlation(
-#'     x = x,
-#'     y = y,
-#'     time1 = time1,
-#'     time2 = time2,
-#'     time_tol = 0.2,
-#'     step = 2 / 60,
-#'     min_matched_sample = 10,
-#'     progressbar = TRUE,
-#'     threads = 16,
-#'     cor_method = "spearman"
-#'   )
-#' object
-#' }
-calculate_lagged_correlation <-
-  function(x,
-           y,
-           time1,
-           time2,
-           time_tol = 1,
-           step = 1 / 60,
-           min_matched_sample = 10,
-           progressbar = TRUE,
-           all_idx = NULL,
-           threads = 10,
-           p_threshold = 0.05,
-           cor_method = c("spearman", "pearson")) {
-    cor_method <- match.arg(cor_method)
-    if (length(x) == 0 || length(y) == 0) {
-      return(NULL)
-    }
+```{r}
+library(laggedcor)
+```
+
+```{r}
+data("step_data", package = "laggedcor")
+data("heart_data", package = "laggedcor")
+```
+
+```{r}
+# calculate_lagged_correlation <-
+#   function(x,
+#            y,
+#            time1,
+#            time2,
+#            time_tol = 1,
+#            step = 1 / 60,
+#            min_matched_sample = 10,
+#            progressbar = TRUE,
+#            all_idx = NULL,
+#            threads = 10,
+#            p_threshold = 0.05,
+#            cor_method = c("spearman", "pearson")) {
+#     cor_method <- match.arg(cor_method)
+#     if (length(x) == 0 || length(y) == 0) {
+#       return(NULL)
+#     }
     ## time_tol unit is hour
     ## step unit is hour
     
     # rescale the input data to the same scale
-    x <- as.numeric(x) %>%
-      scale() %>%
-      as.numeric()
-    
-    y <- as.numeric(y) %>%
-      scale() %>%
-      as.numeric()
-    
-    findpeaks <- function(x) {
-      peak_idx <- which(diff(sign(diff(x))) == -2) + 1
-      return(peak_idx)
-    }
+x <- step_data$step
+y <- heart_data$heart
 
+time1 <- step_data$time
+time2 <- heart_data$time
+```
 
-    # x_peaks <- findpeaks(x_smooth)
+```{r}
+x <- as.numeric(x) %>%
+  scale() %>%
+  as.numeric()
+
+y <- as.numeric(y) %>%
+  scale() %>%
+  as.numeric()
+```
+
+```{r}
+best_params <- fit_smoothing_parameters(x, time1)
+```
+
+```{r}
+res <- smooth_data(x, time1, span = best_params$span)
+x_smooth <- res$smoothed
+time_plot(x_smooth, time1)
+```
+
+```{r}
+x_peaks <- pracma::findpeaks(x_smooth)
+x_peaks
+```
+
+```{r}
+best_params <- fit_smoothing_parameters(y, time2)
+y_smooth <- smooth_data(y, time2, span = best_params$span)$smoothed
+time_plot(y_smooth, time2)
+```
+```{r}
+y_peaks <- pracma::findpeaks(y_smooth)
+y_peaks
+```
+
+```{r}
+x_first_peak <- time1[x_peaks[1, 2]]
+y_first_peak <- time2[y_peaks[1, 2]]
+
+tentative_shift <- x_first_peak - y_first_peak
+tentative_shift
+```
+    
     #
     # x_first_peak <- x_peaks[1]
     #
@@ -274,3 +259,4 @@ calculate_lagged_correlation <-
     
     return(object)
   }
+```
