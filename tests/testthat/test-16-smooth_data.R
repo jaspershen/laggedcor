@@ -5,7 +5,6 @@ test_that("data smoothing works", {
   res1 <- smooth_data(
     x = step_data$step,
     time = step_data$time,
-    span = 0.1,
     should_plot = TRUE
   )
 
