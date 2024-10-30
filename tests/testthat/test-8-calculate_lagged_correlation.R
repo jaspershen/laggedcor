@@ -62,6 +62,7 @@ test_that("calculate_lagged_correlation_works", {
       step = 1 / 60,
       min_matched_sample = 10,
       threads = 16,
+      align_method = "linear",
       cor_method = "spearman"
     )
   end_time <- Sys.time()
