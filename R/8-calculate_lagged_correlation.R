@@ -77,21 +77,21 @@ calculate_lagged_correlation <-
     }
     ## time_tol unit is hour
     ## step unit is hour
-
+    
     # rescale the input data to the same scale
     x <- as.numeric(x) %>%
       scale() %>%
       as.numeric()
-
+    
     y <- as.numeric(y) %>%
       scale() %>%
       as.numeric()
-
+    
     findpeaks <- function(x) {
       peak_idx <- which(diff(sign(diff(x))) == -2) + 1
       return(peak_idx)
     }
-
+    
     # x_peaks <- findpeaks(x_smooth)
     #
     # x_first_peak <- x_peaks[1]
@@ -107,15 +107,15 @@ calculate_lagged_correlation <-
     # y_first_peak <- y_peaks[1]
     #
     # tentative_shift <- x_first_peak - y_first_peak
-
+    
     time_window1 <-
       seq(from = step / 2, to = time_tol, by = step)
-
+    
     time_window2 <-
       -rev(seq(from = step / 2, to = time_tol, by = step))
-
+    
     time_window <- sort(c(time_window2, time_window1))
-
+    
     # temp_fun <-
     #   function(temp_idx,
     #            time_window,
@@ -133,17 +133,16 @@ calculate_lagged_correlation <-
     #           diff_time <= time_window[temp_idx + 1])
     #       })
     #   }
-
+    
     if (get_os() == "windows") {
       bpparam <- BiocParallel::SnowParam(workers = threads)
     } else {
       # Ref: https://support.bioconductor.org/p/9140528/
-      bpparam <- BiocParallel::MulticoreParam(workers = threads,
-                                              force.GC = FALSE)
+      bpparam <- BiocParallel::MulticoreParam(workers = threads, force.GC = FALSE)
     }
-
+    
     old_all_idx <- all_idx
-
+    
     if (is.null(all_idx)) {
       all_idx <- BiocParallel::bplapply(
         X = seq_along(time_window)[-length(time_window)],
@@ -163,7 +162,7 @@ calculate_lagged_correlation <-
         BPPARAM = BiocParallel::SerialParam(progressbar = TRUE)
       )
     }
-
+    
     all_cor_result <-
       purrr::map(all_idx, function(idx) {
         temp_y <-
@@ -184,7 +183,7 @@ calculate_lagged_correlation <-
           )
         }
       })
-
+    
     all_cor_p <-
       all_cor_result %>%
       purrr::map(function(x) {
@@ -196,7 +195,7 @@ calculate_lagged_correlation <-
         }
       }) %>%
       unlist()
-
+    
     all_cor <-
       all_cor_result %>%
       purrr::map(function(x) {
@@ -209,15 +208,15 @@ calculate_lagged_correlation <-
       }) %>%
       unlist() %>%
       unname()
-
+    
     which_max_idx <-
       which.max(abs(all_cor))
-
+    
     max_idx <- all_idx[[which_max_idx]]
-
+    
     shift_time <-
       paste("(", paste(round(time_window[-length(time_window)] * 60, 2), round(time_window[-1] * 60, 2), sep = ","), "]", sep = "")
-
+    
     which_global_idx <-
       purrr::map(shift_time, function(x) {
         x <-
@@ -230,12 +229,12 @@ calculate_lagged_correlation <-
       }) %>%
       unlist() %>%
       which()
-
+    
     global_idx <- all_idx[[which_global_idx]]
-
+    
     global_cor <- all_cor[which_global_idx]
     global_cor_p <- all_cor_p[which_global_idx]
-
+    
     parameter <-
       new(
         Class = "tidymass_parameter",
@@ -252,7 +251,7 @@ calculate_lagged_correlation <-
         ),
         time = Sys.time()
       )
-
+    
     object <- new(
       Class = "lagged_cor_result",
       x = x,
@@ -271,6 +270,6 @@ calculate_lagged_correlation <-
       global_cor = global_cor,
       parameter = parameter
     )
-
+    
     return(object)
   }
