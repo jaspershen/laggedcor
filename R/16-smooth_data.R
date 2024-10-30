@@ -18,8 +18,9 @@
 #' x <- step_data$step
 #' time <- step_data$time
 #' span <- 0.1
+#' degree <- 2
 #'
-#' res <- smooth_data(x, time, span, should_plot = TRUE)
+#' res <- smooth_data(x, time, span, degree, should_plot = TRUE)
 #'
 #' @export
 #' @author Zirui Qiang \email{{zirui_qiang@outlook.com}}

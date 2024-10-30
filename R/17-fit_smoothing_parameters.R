@@ -13,13 +13,13 @@
 #' @return A list of the best span and degree parameters for the LOESS data smoothing method.
 #'
 #' @examples
-#' data("test_data", package = "laggedcor")
-#' best_params <- fit_smoothing_parameters(data = test_data, time_var = "time", value_var = "value", dataset_name = "test")
+#' data("step_data", package = "laggedcor")
+#' best_params <- fit_smoothing_parameters(x = step_data$step,
+#'                                         time = step_data$time)
 #' best_params
 #'
 #' @export
 #'
-#' #
 #' @author Zirui Qiang \email{{zirui_qiang@outlook.com}}
 #' @author Minghang Li \email{{minghli@ethz.ch}}
 fit_smoothing_parameters <- function(x,
@@ -44,10 +44,6 @@ fit_smoothing_parameters <- function(x,
   # Ensure that there are no NA values and x > 0
   test_data <- test_data %>%
     filter(!is.na(x) & x > 0)
-  
-  message("Number of valid observations in test_data:",
-          nrow(test_data),
-          "\n")
   
   if (nrow(test_data) < 2) {
     stop(crayon::red("Not enough valid data points after filtering to fit the model."))

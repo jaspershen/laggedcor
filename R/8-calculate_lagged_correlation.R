@@ -30,7 +30,6 @@
 #' @export
 #' @author Xiaotao Shen \email{shenxt1990@stanford.edu}
 #' @examples
-#' \dontrun{
 #' data("heart_data", package = "laggedcor")
 #' data("step_data", package = "laggedcor")
 #'
@@ -57,7 +56,7 @@
 #'     cor_method = "spearman"
 #'   )
 #' object
-#' }
+
 calculate_lagged_correlation <-
   function(x,
            y,
@@ -82,13 +81,13 @@ calculate_lagged_correlation <-
       return(NULL)
     }
     # rescale the input data to the same scale
-    # x <- as.numeric(x) %>%
-    #   scale() %>%
-    #   as.numeric()
-    
-    # y <- as.numeric(y) %>%
-    #   scale() %>%
-    #   as.numeric()
+    x <- as.numeric(x) %>%
+      scale() %>%
+      as.numeric()
+
+    y <- as.numeric(y) %>%
+      scale() %>%
+      as.numeric()
     
 
     # Find common time range
@@ -181,7 +180,15 @@ calculate_lagged_correlation <-
       )
     }
     
-    all_idx <- shift_time_num
+    find_interpolation_points <- function(x, xout) {
+      sapply(xout, function(point) {
+        left <- max(which(x <= point))
+        right <- min(which(x >= point))
+        c(left = left, right = right)
+      })
+    }
+    
+    all_idx <- list() # dummy
     
     all_cor_result <- ccf_res # I really don't know what to give
     all_cor_p <- 2 * (1 - pnorm(
@@ -194,7 +201,7 @@ calculate_lagged_correlation <-
     which_max_idx <-
       which.max(abs(all_cor))
     
-    max_idx <- all_idx[[which_max_idx]]
+    max_idx <- list() # dummy
     
     # find the idx that cross the 0 lag point
     which_global_idx <-
@@ -211,7 +218,7 @@ calculate_lagged_correlation <-
       which()
     
     # get the 0 lag index
-    global_idx <- all_idx[[which_global_idx]]
+    global_idx <- list() # dummy()
     
     
     global_cor <- all_cor[which_global_idx]

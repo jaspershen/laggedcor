@@ -8,6 +8,7 @@ smooth_data(
   x,
   time,
   span,
+  degree,
   should_plot = FALSE,
   color_original = "blue",
   color_smoothed = "red"
@@ -39,8 +40,9 @@ data("step_data", package = "laggedcor")
 x <- step_data$step
 time <- step_data$time
 span <- 0.1
+degree <- 2
 
-res <- smooth_data(x, time, span, should_plot = TRUE)
+res <- smooth_data(x, time, span, degree, should_plot = TRUE)
 
 }
 \author{

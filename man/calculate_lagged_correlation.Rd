@@ -14,8 +14,10 @@ calculate_lagged_correlation(
   min_matched_sample = 10,
   progressbar = TRUE,
   all_idx = NULL,
+  B = 1000,
+  smooth = FALSE,
   threads = 10,
-  p_threshold = 0.05,
+  align_method = c("linear", "constant"),
   cor_method = c("spearman", "pearson")
 )
 }
@@ -61,7 +63,6 @@ a tolerance window. Parallel processing is implemented to improve performance
 for large datasets.
 }
 \examples{
-\dontrun{
 data("heart_data", package = "laggedcor")
 data("step_data", package = "laggedcor")
 
@@ -88,7 +89,6 @@ object <-
     cor_method = "spearman"
   )
 object
-}
 }
 \author{
 Xiaotao Shen \email{shenxt1990@stanford.edu}

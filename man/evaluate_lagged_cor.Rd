@@ -42,7 +42,28 @@ This function depends on several external packages (\code{ggplot2}, \code{dplyr}
 well as a custom \code{fitpeaks} function that must be defined elsewhere in the user's environment.
 }
 \examples{
-data("object", package = "laggedcor")
+data("heart_data", package = "laggedcor")
+data("step_data", package = "laggedcor")
+
+x <- step_data$step
+time1 <- step_data$time
+
+y <- heart_data$heart
+time2 <- heart_data$time
+
+object <-
+  calculate_lagged_correlation(
+    x = x,
+    y = y,
+    time1 = time1,
+    time2 = time2,
+    time_tol = 0.2,
+    step = 2 / 60,
+    min_matched_sample = 10,
+    progressbar = TRUE,
+    threads = 16,
+    cor_method = "spearman"
+  )
 result = 
   evaluate_lagged_cor(object = object, plot = TRUE)
 

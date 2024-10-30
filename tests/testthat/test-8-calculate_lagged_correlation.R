@@ -1,3 +1,5 @@
+library(testthat)
+
 generate_time_series <- function(seed = 123, lag_minutes = 10) {
   set.seed(seed = seed)
   # Generate time series parameters
@@ -73,5 +75,11 @@ test_that("calculate_lagged_correlation_works", {
   shift_time_num <- extract_shift_time(object = result)
   true_shift_idx <- which(shift_time_num == -lag_minutes)[1]
   true_shift_time <- result@shift_time[true_shift_idx]
-  testthat::expect_equal(names(max_cor), true_shift_time)
+  
+  extract_all_cor(object = result)
+  extract_all_cor_p(object = result)
+  extract_global_cor(object = result)
+  extract_max_cor(object = result)
+  extract_shift_time(object = result)
+  expect_equal(names(max_cor), true_shift_time)
 })
