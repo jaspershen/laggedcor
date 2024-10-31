@@ -180,13 +180,6 @@ calculate_lagged_correlation <-
       )
     }
     
-    find_interpolation_points <- function(x, xout) {
-      sapply(xout, function(point) {
-        left <- max(which(x <= point))
-        right <- min(which(x >= point))
-        c(left = left, right = right)
-      })
-    }
     
     all_idx <- list() # dummy
     
