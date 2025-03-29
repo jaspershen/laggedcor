@@ -30,6 +30,7 @@ laggedcor_logo <-
   message(crayon::green("Thank you for using laggedcor!"))
   message(crayon::green("Version", laggedcor_version, "(", laggedcor_update_date, ")"))
   message(crayon::green("More information: searching 'jaspershen laggedcor'."))
+  message(crayon::yellow("I'M USING THE DEVELOPER VERSION OF LAGGEDCOR"))
   
   logo =
     c(

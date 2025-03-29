@@ -13,18 +13,18 @@ text_col <- function(x) {
   if (!rstudioapi::isAvailable()) {
     return(x)
   }
-  
+
   if (!rstudioapi::hasFun("getThemeInfo")) {
     return(x)
   }
-  
+
   theme <- rstudioapi::getThemeInfo()
-  
+
   if (isTRUE(theme$dark))
     crayon::white(x)
   else
     crayon::black(x)
-  
+
 }
 
 #' List all packages in the laggedcor
@@ -40,11 +40,11 @@ laggedcor_packages <- function(include_self = TRUE) {
   parsed <- gsub("^\\s+|\\s+$", "", imports)
   names <-
     vapply(strsplit(parsed, "\\s+"), "[[", 1, FUN.VALUE = character(1))
-  
+
   if (include_self) {
     names <- c(names, "laggedcor")
   }
-  
+
   names
 }
 
@@ -74,6 +74,24 @@ base_theme =
     strip.text =  ggplot2::element_text(size = 12)
   )
 
+# find peaks in 1d data
+findpeaks <- function(y, minpeakdist = 1, minpeakheight = 0) {
+  peakloc <- which(diff(sign(diff(y))) == -2) + 1
+  if (length(peakloc) == 0) {
+    return(peakloc)
+  }
+
+  if (minpeakdist > 1) {
+    peakloc <- peakloc[which(diff(peakloc) > minpeakdist)]
+  }
+
+  if (minpeakheight > 0) {
+    peakloc <- peakloc[y[peakloc] > minpeakheight]
+  }
+
+  peakloc
+}
+
 
 fitpeaks <- function(y, pos) {
   names(y) <- NULL
@@ -82,11 +100,11 @@ fitpeaks <- function(y, pos) {
                        nrow = 1,
                        dimnames = list(NULL, tabnames)) %>%
     as.data.frame()
-  
+
   if (length(pos) == 0) {
     return(noPeaksMat)
   }
-  
+
   fitpk <- function(xloc) {
     ## find all areas higher than half the current max
     peak.loc <- which(y > 0.2 * y[xloc])
@@ -95,7 +113,7 @@ fitpeaks <- function(y, pos) {
       c(0,
         which(diff(peak.loc) != 1),
         length(peak.loc) + 1)
-    
+
     peaknrs <- rep(seq_along(boundaries),
                    c(boundaries[1], diff(c(boundaries))))
     peaknrs[boundaries[-1]] <- NA
@@ -103,12 +121,12 @@ fitpeaks <- function(y, pos) {
     current.peak <- current.peak[!is.na(current.peak)]
     if (length(current.peak) == 0)
       return(rep(NA, 5))
-    
+
     ## only retain those points adjacent to the current max
     FWHM <- diff(range(peak.loc[peaknrs == current.peak],
                        na.rm = TRUE))
     pksd <- FWHM / (2 * sqrt(2 * log(2)))
-    
+
     c(
       rt = xloc,
       sd = pksd,
@@ -117,12 +135,13 @@ fitpeaks <- function(y, pos) {
       area = y[xloc] / dnorm(x = xloc, mean = xloc, sd = pksd)
     )
   }
-  
+
   huhn <- t(sapply(pos, fitpk))
   colnames(huhn) <- tabnames
-  
+
   huhn
 }
+
 
 
 

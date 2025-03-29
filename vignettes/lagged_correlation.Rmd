@@ -31,11 +31,11 @@ knitr::opts_chunk$set(
 
 `laggedcor` needs two time-series data and their corresponding time.
 
-* x: time-series 1. numeric vector. 
+* x: time-series 1. numeric vector.
 
-* y: time-series 2. numeric vector. 
+* y: time-series 2. numeric vector.
 
-* time1: time for x. 
+* time1: time for x.
 
 * time2: time for y.
 
@@ -49,6 +49,7 @@ data("heart_data", package = "laggedcor")
 head(step_data)
 head(heart_data)
 ```
+
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
 time_plot(x = step_data$step, time = step_data$time)
 ```
@@ -65,6 +66,7 @@ Then we calculate the lagged correlations between step and heart rate.
 dim(step_data)
 dim(heart_data)
 ```
+
 The time-series data with less number of time point should be set as `x`.
 
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
@@ -77,16 +79,23 @@ time2 = heart_data$time
 
 
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
-result = 
-  calculate_lagged_correlation(x = x, 
-                               y = y,
-                               time1 = time1, 
-                               time2 = time2, 
-                               time_tol = 0.2, 
-                               step = 2 / 60, 
-                               min_matched_sample = 10, 
-                               threads = 5, 
-                               cor_method = "spearman")
+start_time <- Sys.time()
+
+result <-
+  calculate_lagged_correlation(
+    x = x,
+    y = y,
+    time1 = time1,
+    time2 = time2,
+    time_tol = 0.2,
+    step = 2 / 60,
+    min_matched_sample = 10,
+    threads = 16,
+    cor_method = "spearman"
+  )
+
+end_time <- Sys.time()
+end_time - start_time
 ```
 
 The parameters of `calculate_lagged_correlation`;
@@ -114,6 +123,10 @@ The parameters of `calculate_lagged_correlation`;
 
 ```{r,eval=TRUE,warning=FALSE, R.options="", message=FALSE, cache=TRUE}
 result
+```
+
+```{r}
+saveRDS(result, "lagged_correlation_result.rds")
 ```
 
 We can see that the index of max correlation is 11 and index of global correlation is 12, means that the max correlation is achieved from a shifted time.
